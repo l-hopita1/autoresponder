@@ -1,0 +1,122 @@
+{
+  "root": {
+    "message": "🌍💚 ¡Hola! ¡Muchas gracias por contactarnos! Puedo ayudarte en forma automática o podés solicitar la atención de nuestros asesores.\n\nIngresá el número y hablemos:\n1. 💡 Paneles fotovoltaicos para electricidad y baterías\n2. 🏊‍♂ Climatización de pileta\n3. 🚿 Termotanques solares\n4. ❄ Bomba de calor (aerotermia) para climatización del hogar\n5. 🛠 Mantenimiento y reparaciones en general, herrería, electricidad, pintura, sanitarios\n6. 👤 Chatear con un asesor. Atención a empresas",
+    "options": {
+      "1": "menu_1",
+      "2": "menu_2",
+      "3": "menu_3",
+      "4": "menu_4",
+      "5": "menu_5",
+      "6": "menu_6"
+    }
+  },
+  "menu_1": {
+    "message": "Seleccione el número de la opción deseada \n✅ Si querés un presupuesto instantáneo de paneles de electricidad y/o baterías, completá este formulario: \nhttps://calaresenergiasrenovables.com/cotizate.php\n\nSino, adelantamos por favor lo siguiente:\n1. Mi objetivo es ahorrar en la factura\n2. Quiero ahorrar y además tener Backup ante corte y baja tension\n3. Estoy en una zona sin servicio eléctrico\n0. Menú Principal",
+    "options": {
+      "1": "menu_1_1",
+      "2": "menu_1_2",
+      "3": "menu_1_3",
+      "0": "root"
+    },
+    "back": "root"
+  },
+  "menu_1_1": {
+    "message": "Seleccione el número de la opción deseada \nUn asesor se contactará contigo. mientras, adelantamos, por favor, si tu instalación es trifásica o monofásico. \n¿Estás en etapa de construcción o ya está construido?\n¿Qué tipo de techo es?\n¿En qué localidad?\nSi podés, adjuntá una factura de luz actualizada.\n9. Menú Anterior\n0. Menú Principal",
+    "options": {
+      "9": "menu_1",
+      "0": "root"
+    }
+  },
+  "menu_1_2": {
+    "message": "Seleccione el número de la opción deseada \nUn asesor se contactará contigo. mientras, adelantamos, por favor, si tu instalación es  trifásica o monofásico. \n¿Estás en etapa de construcción o ya está construido?\n¿Qué tipo de techo es?\n¿En qué localidad?\nSi podés, adjuntá una factura de luz actualizada.\n9. Menú Anterior\n0. Menú Principal",
+    "options": {
+      "9": "menu_1",
+      "0": "root"
+    }
+  },
+  "menu_1_3": {
+    "message": "Seleccione el número de la opción deseada \nUn asesor se contactará contigo. mientras, adelantamos, por favor, la siguiente información para responderte más rápido: \n¿Estás en etapa de construcción o ya está construido?\n¿Qué tipo de techo es?\n¿En qué localidad?\n¿Cuales son tus mayores consumos eléctricos?\n9. Menú Anterior\n0. Menú Principal",
+    "options": {
+      "9": "menu_1",
+      "0": "root"
+    }
+  },
+  "menu_2": {
+    "message": "Seleccione el número de la opción deseada \nVas a poder disfrutar a una temperatura ideal, extendiendo la temporada de forma ecológica y económica.\n⌨ Por favor escribí el número ( 1 / 2 / 0) de la opción que elijas:\n1. ❓ Ver respuestas a preguntas frecuentes\n2. 📝 Solicitar un presupuesto.\n0. Menú Principal",
+    "options": {
+      "1": "menu_2_1",
+      "2": "menu_2_2",
+      "0": "root"
+    }
+  },
+  "menu_2_1": {
+    "message": "Seleccione el número de la opción deseada \n❓ Para ver un listado de las principales preguntas y respuestas, entrá en www.calaresenergiasrenovables.com/dudas/#piscinas\n📧 Si aún necesitás nuestro asesoramiento, escribinos tu consulta por aquí o a info@calaresenergiasrenovables.com \n⌨ Por favor escribí el número de la opción que elijas ( 9 / 0 )\n9. Menú Anterior\n0. Menú Principal",
+    "options": {
+      "9": "menu_2",
+      "0": "root"
+    }
+  },
+  "menu_2_2": {
+    "message": "Seleccione el número de la opción deseada \nPara climatizar tu pileta, ofrecemos 2 opciones, mantas solares o bombas de calor.\n⌨ Por favor escribí el número de la opción que elijas (1 / 2 / 9 / 0 )\n1. 🌞Manta solar\n2. 🌡️Bomba de calor\n9. Menú Anterior\n0. Menú Principal",
+    "options": {
+      "1": "menu_2_2_1",
+      "2": "menu_2_2_2",
+      "9": "menu_2",
+      "0": "root"
+    }
+  },
+  "menu_2_2_1": {
+    "message": "Seleccione el número de la opción deseada \nClimatizar una pileta de 6x3 metros cuesta, con instalación incluida, aproximadamente $3.800.000. Consultá por nuestra financiación preferencial en proyectos sustentables.\nPara solicitar un presupuesto detallado respondenos las siguientes preguntas por aquí o mandanos un mail a info@calaresenergiasrenovables.com \nSi podés envianos una foto de tu pileta, bomba de filtrado, techos y panorámica del lugar.\n📐Decinos el tamaño de tu pileta. \nℹ Contanos si te gustaría ubicar el climatizador al lado de tu pileta o en algún techo (¿losa, chapa, tejas?).\n⌨ Por favor escribí el número de la opción que elijas ( 9 / 0 )\n9. Menú Anterior\n0. Menú Principal",
+    "options": {
+      "9": "menu_2_2",
+      "0": "root"
+    }
+  },
+  "menu_2_2_2": {
+    "message": "Seleccione el número de la opción deseada \nClimatizar una pileta de 8x4 metros cuesta, con instalación incluida, $3.400.000. Consultá por nuestra financiación preferencial en proyectos sustentables.\n📧 Para solicitar un presupuesto detallado respondenos las siguientes preguntas por aquí o mandanos un mail a info@calaresenergiasrenovables.com \n📸 Si podés envianos una foto de tu pileta, bomba de filtrado, techos y panorámica del lugar.\n📐Decinos el tamaño de tu pileta.\n⌨ Por favor escribí el número de la opción que elijas ( 9 / 0 )\n9. Menú Anterior\n0. Menú Principal",
+    "options": {
+      "9": "menu_2_2",
+      "0": "root"
+    }
+  },
+  "menu_3": {
+    "message": "Seleccione el número de la opción deseada \n¡Qué bueno que quieras aprovechar el sol para calentar el agua de tu casa y así cuidar al medio ambiente y a tu economía!\n ⌨ Por favor escribí el número ( 1 / 2 / 3 / 0 ) de la opción que elijas:\n1. ❓ Ver respuestas a preguntas frecuentes\n2. 📝 Solicitar un presupuesto.\n0. Menú Principal",
+    "options": {
+      "1": "menu_3_1",
+      "2": "menu_3_2",
+      "0": "root"
+    }
+  },
+  "menu_3_1": {
+    "message": "Seleccione el número de la opción deseada \n❓ Para ver un listado de las principales preguntas y respuestas, entrá en www.calaresenergiasrenovables.com/dudas/#termotanques\n📧 Si aún necesitás nuestro asesoramiento, escribinos tu consulta por aquí o a info@calaresenergiasrenovables.com \n⌨ Por favor escribí el número de la opción que elijas ( 9 / 0 )\n9. Menú Anterior\n0. Menú Principal",
+    "options": {
+      "9": "menu_3",
+      "0": "root"
+    }
+  },
+  "menu_3_2": {
+    "message": "Seleccione el número de la opción deseada \nUn termotanque solar para una familia de 2 integrantes cuesta desde $500.000, más instalación.\nConsultá por nuestra financiación preferencial en proyectos sustentables.\n📧 Para solicitar un presupuesto detallado respondenos las siguientes preguntas por aquí o mandanos un mail a info@calaresenergiasrenovables.com \nEnvianos una foto de Google Maps del techo de tu casa.\n¿Tenés sistemas presurizado o tanque de altura? \n¿Cuántas personas viven allí? \n¿Dónde lo ubicarías (piso, techo de losa, chapa, teja)?\n⌨ Por favor escribí el número de la opción que elijas ( 9 / 0 )\n9. Menú Anterior\n0. Menú Principal",
+    "options": {
+      "9": "menu_3",
+      "0": "root"
+    }
+  },
+  "menu_4": {
+    "message": "Seleccione el número de la opción deseada \nUna bomba de calor climatiza tu casa de manera eficiente mediante la aerotermia. Tiene un bajo consumo eléctrico que tiene se puede suplir con paneles solares ara hacerlo 100% sustentable.\n Consultá por nuestra financiación preferencial en proyectos sustentables.\n📧 Para solicitar un presupuesto detallado respondenos las siguientes preguntas por aquí o mandanos un mail a info@calaresenergiasrenovables.com \n¿Estás en etapa de construcción o ya está construido?\n¿Ya están instaladas las serpentinas de la losa radiante?\n¿Cuantos m2 tiene la casa?\n¿En qué localidad se encuentran?\n⌨ Por favor escribí 0 para volver al menu principal.\n0. Menú Principal",
+    "options": {
+      "0": "root"
+    }
+  },
+  "menu_5": {
+    "message": "¡Te responderemos a la brevedad! Te pedimos que nos brindes por aquí el mayor detalle posible para que podamos asesorarte en tu consulta/presupuesto. Enviá 0 para volver al menu principal.",
+    "options": {
+      "0": "root"
+    }
+  },
+  "menu_6": {
+    "message": "¡Te responderemos a la brevedad! Te pedimos que nos brindes por aquí el mayor detalle posible para que podamos asesorarte en tu consulta/presupuesto. Enviá 0 para volver al menu principal.",
+    "options": {
+      "0": "root"
+    }
+  }
+}

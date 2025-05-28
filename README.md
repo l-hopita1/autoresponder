@@ -76,18 +76,21 @@ Consultá el archivo [CHANGELOG](CHANGELOG) para ver el historial completo de ve
 ---
 
 ## 🔮 Próximas versiones
+### 🧪 1.1.0
+- Testeos para un desarrollo más rápido
+   - Utilizar la terminal de comandos para probar los módulos del chat bot.
 
-### ✅ 1.1.0
+### ✅ 1.2.0
 - Estadísticas sincronizadas con Google Sheets:
   - Número de celular
   - Cantidad de interacciones
   - Último estado del menú
   - Última fecha de interacción
 
-### ⏳ 1.2.0
+### ⏳ 1.3.0
 - Seguimiento automático por inactividad con reintentos configurables.
 
-### ✉️ 1.3.0
+### ✉️ 1.4.0
 - Seguimiento personalizado en base al último mensaje enviado.
 
 ### 📊 2.0.0

@@ -1,8 +1,15 @@
+# Importar módulos
+import json, os
+
 from flask import Flask, request, jsonify
-from menu import MENU
+# Importar clases
 from datetime import datetime
 
 app = Flask(__name__)
+
+# Cargar el menú desde el archivo JSON
+with open(os.path.join(os.path.dirname(__file__), 'menu.json'), encoding='utf-8') as f:
+    MENU = json.load(f)
 
 # Estados por usuario
 user_states = {}
