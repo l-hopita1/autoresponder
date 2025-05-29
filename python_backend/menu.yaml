@@ -1,0 +1,175 @@
+root:
+  message: |
+    🌍💚 ¡Hola! ¡Muchas gracias por contactarnos! Puedo ayudarte en forma automática o podés solicitar la atención de nuestros asesores.
+
+    Ingresá el número y hablemos:
+    1. 💡 Paneles fotovoltaicos para electricidad y baterías
+    2. 🏊‍♂ Climatización de pileta
+    3. 🚿 Termotanques solares
+    4. ❄ Bomba de calor (aerotermia) para climatización del hogar
+    5. 🛠 Mantenimiento y reparaciones en general, herrería, electricidad, pintura, sanitarios
+    6. 👤 Chatear con un asesor. Atención a empresas
+  options:
+    "1": menu_1
+    "2": menu_2
+    "3": menu_3
+    "4": menu_4
+    "5": menu_5
+    "6": menu_6
+
+menu_1:
+  message: |
+    ✅ Si querés un presupuesto instantáneo de paneles de electricidad y/o baterías, completá este formulario: 
+    https://calaresenergiasrenovables.com/cotizate.php
+
+    Sino, adelantamos por favor lo siguiente:
+    1. Mi objetivo es ahorrar en la factura
+    2. Quiero ahorrar y además tener Backup ante corte y baja tension
+    3. Estoy en una zona sin servicio eléctrico
+    0. Menú principal
+  options:
+    "1": menu_1_1
+    "2": menu_1_2
+    "3": menu_1_3
+  back: root
+
+menu_1_1:
+  message: |
+    Un asesor se contactará contigo. Mientras, por favor, indicá si tu instalación es trifásica o monofásica. 
+    ¿Estás en etapa de construcción o ya está construido?
+    ¿Qué tipo de techo es?
+    ¿En qué localidad?
+    Si podés, adjuntá una factura de luz actualizada.
+
+    9. Menú anterior
+    0. Menú principal
+  back: menu_1
+
+menu_1_2:
+  message: |
+    Un asesor se contactará contigo. Mientras, por favor, indicá si tu instalación es trifásica o monofásica. 
+    ¿Estás en etapa de construcción o ya está construido?
+    ¿Qué tipo de techo es?
+    ¿En qué localidad?
+    Si podés, adjuntá una factura de luz actualizada.
+
+    9. Menú anterior
+    0. Menú principal
+  back: menu_1
+
+menu_1_3:
+  message: |
+    Un asesor se contactará contigo. Mientras, por favor, indicá:
+    ¿Estás en etapa de construcción o ya está construido?
+    ¿Qué tipo de techo es?
+    ¿En qué localidad?
+    ¿Cuáles son tus mayores consumos eléctricos?
+    9. Menú anterior
+    0. Menú principal
+  back: menu_1
+
+menu_2:
+  message: |
+    Vas a poder disfrutar a una temperatura ideal, extendiendo la temporada de forma ecológica y económica.
+    1. ❓ Ver respuestas a preguntas frecuentes
+    2. 📝 Solicitar un presupuesto.
+    0. Menú principal
+  options:
+    "1": menu_2_1
+    "2": menu_2_2
+  back: root
+
+menu_2_1:
+  message: |
+    ❓ Para ver un listado de las principales preguntas y respuestas, entrá en www.calaresenergiasrenovables.com/dudas/#piscinas
+    📧 Si aún necesitás nuestro asesoramiento, escribinos tu consulta por aquí o a info@calaresenergiasrenovables.com
+    9. Menú anterior
+    0. Menú principal
+  back: menu_2
+
+menu_2_2:
+  message: |
+    Para climatizar tu pileta, ofrecemos 2 opciones, mantas solares o bombas de calor.
+    1. 🌞Manta solar
+    2. 🌡️Bomba de calor
+    9. Menú anterior
+    0. Menú principal
+  options:
+    "1": menu_2_2_1
+    "2": menu_2_2_2
+  back: menu_2
+
+menu_2_2_1:
+  message: |
+    Climatizar una pileta de 6x3 metros cuesta, con instalación incluida, aproximadamente $3.800.000. Consultá por nuestra financiación preferencial en proyectos sustentables.
+    Para solicitar un presupuesto detallado respondé por aquí o escribí a info@calaresenergiasrenovables.com
+    Adjuntá fotos de tu pileta, bomba de filtrado, techos y panorámica del lugar.
+    📐Decinos el tamaño de tu pileta.
+    ℹ Contanos si te gustaría ubicar el climatizador al lado de tu pileta o en algún techo (¿losa, chapa, tejas?).
+    9. Menú anterior
+    0. Menú principal
+  back: menu_2_2
+
+menu_2_2_2:
+  message: |
+    Climatizar una pileta de 8x4 metros cuesta, con instalación incluida, $3.400.000. Consultá por nuestra financiación preferencial en proyectos sustentables.
+    📧 Para solicitar un presupuesto detallado respondé por aquí o escribí a info@calaresenergiasrenovables.com
+    Adjuntá fotos de tu pileta, bomba de filtrado, techos y panorámica del lugar.
+    📐Decinos el tamaño de tu pileta.
+    9. Menú anterior
+    0. Menú principal
+  back: menu_2_2
+
+menu_3:
+  message: |
+    ¡Qué bueno que quieras aprovechar el sol para calentar el agua de tu casa!
+    1. ❓ Ver respuestas a preguntas frecuentes
+    2. 📝 Solicitar un presupuesto.
+    0. Menú principal
+  options:
+    "1": menu_3_1
+    "2": menu_3_2
+  back: root
+
+menu_3_1:
+  message: |
+    ❓ Para ver un listado de las principales preguntas y respuestas, entrá en www.calaresenergiasrenovables.com/dudas/#termotanques
+    📧 Si aún necesitás nuestro asesoramiento, escribinos por aquí o a info@calaresenergiasrenovables.com
+    9. Menú anterior
+    0. Menú principal
+  back: menu_3
+
+menu_3_2:
+  message: |
+    Un termotanque solar para una familia de 2 integrantes cuesta desde $500.000, más instalación.
+    📧 Para solicitar un presupuesto detallado, envianos:
+    - Foto de Google Maps del techo de tu casa.
+    - Si tenés sistema presurizado o tanque de altura.
+    - Cuántas personas viven allí.
+    - Dónde lo ubicarías (piso, losa, chapa, teja).
+    9. Menú anterior
+    0. Menú principal
+  back: menu_3
+
+menu_4:
+  message: |
+    Una bomba de calor climatiza tu casa de manera eficiente mediante aerotermia. Tiene un bajo consumo eléctrico que se puede suplir con paneles solares para hacerlo 100% sustentable.
+    📧 Para solicitar un presupuesto detallado, envianos:
+    - Si estás en construcción o ya está construido.
+    - Si ya están instaladas las serpentinas de la losa radiante.
+    - Cuántos m2 tiene la casa.
+    - En qué localidad se encuentra.
+    0. Menú principal
+  back: root
+
+menu_5:
+  message: |
+    ¡Te responderemos a la brevedad! Enviá el mayor detalle posible para que podamos asesorarte en tu consulta/presupuesto.
+    0. Menú principal
+  back: root
+
+menu_6:
+  message: |
+    ¡Te responderemos a la brevedad! Enviá el mayor detalle posible para que podamos asesorarte en tu consulta/presupuesto.
+    0. Menú principal
+  back: root

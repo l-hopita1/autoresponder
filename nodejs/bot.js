@@ -2,7 +2,7 @@ const { Client, MessageMedia } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const axios = require('axios');
 const WAWebJS = require('whatsapp-web.js');
-
+const TESTING = false;
 const client = new Client();
 
 function log(msg) {
@@ -26,7 +26,7 @@ client.on('message', async msg => {
     // Ignoro mensajes:
     if (msg.from.includes('status')) return;
     if (msg.from.includes('@g.us')) return;
-    if (contact.isMyContact) {
+    if (contact.isMyContact && !TESTING) {
         log(`✔️ Filtrado: Contacto guardado en +${msg.from}`);
         return;
     }
