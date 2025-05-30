@@ -1,8 +1,21 @@
-- 26 de mayo de 2026 21:47 - [1.0.0]
-    - Primer versión de autoresponder para implementar en whatsapp de calares.
-- 28 de mayo de 2026 17:15 - [1.0.1]
+- 26 de mayo de 2025 21:47 - [1.0.0]
+    - Primer versión de autoresponder para implementar en whatsapp de Calares.
+- 28 de mayo de 2025 17:15 - [1.0.1]
     - Modificación:
         - Cambio de nombre "python_backend/requierements.txt" a "python_backend/requirements.txt"
-- 28 de mayo de 2026 18:18 - [1.0.2]
+- 28 de mayo de 2025 18:18 - [1.0.2]
     - Modificación:
         - Cambio de formato de "menu.py" a "menu.json" para una lectura más fácil.
+- 28 de mayo de 2025 22:37 - [1.0.3]
+    - Agregado:
+        - Parámetro TESTING para evitar el uso de filtros y ver si funciona correctamente en otro whatsapp.
+        - Nueva dependencia de pyyaml en "python_backend/requirements.txt"
+    - Modificado:
+        - Menú en YAML en vez de JSON para facilitar modificaciones.
+        - Cache local en .gitignore
+    - Borrado:
+        - Cache local
+- 30 de mayo de 2025 14:29 - [1.0.4]
+    - Agregado:
+        - Si no se encuentra un estado del número del cliente, se le responde con la raiz del menú.
+        - Guardado de datos de usuario en archivo local.

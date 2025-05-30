@@ -61,9 +61,11 @@
    ```
    > Escaneá el código QR desde el celular para vincular tu cuenta de WhatsApp.
 
-2. **En otra consola**, ejecutá el servidor backend de Python:
+2. **En otra consola**, asegurá que estés en el último release y ejecutá el servidor backend de Python:
    ```bash
    cd "Calares/Gestion del cliente/autoresponder"
+   git fetch --all
+   git reset --hard origin/main
    python python_backend/app.py
    ```
 
@@ -76,12 +78,16 @@ Consultá el archivo [CHANGELOG](CHANGELOG) para ver el historial completo de ve
 ---
 
 ## 🔮 Próximas versiones
-### 🧪 1.1.0
-- Testeos para un desarrollo más rápido
-   - Utilizar la terminal de comandos para probar los módulos del chat bot.
+### 🧪 1.0.x
+- Almacenamiento *local* del estado del cliente: 
+   - Para evitar spam
+
+### 1.1.0
+- Actualización automática de python backend
+   - Así no hay que entrar a ejecutar los cambios a mano. Aumentaría la velocidad de actualizaciones.
 
 ### ✅ 1.2.0
-- Estadísticas sincronizadas con Google Sheets:
+- Almacenamiento en *Google Sheet* del estado del cliente:
   - Número de celular
   - Cantidad de interacciones
   - Último estado del menú
