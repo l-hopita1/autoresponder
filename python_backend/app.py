@@ -23,7 +23,7 @@ if os.path.exists(user_data_path):
     try:
         with open(user_data_path, 'r', encoding='utf-8') as f:
             users_data = json.load(f)
-        log(f"✅ Datos de usuarios cargados correctamente: {users_data}")
+        log(f"app.py | ✅ Datos de usuarios cargados correctamente: {users_data}")
     except Exception as e:
         log(f"❌ Error al cargar datos: {e}")
 
@@ -34,9 +34,9 @@ async def save_user_data():
             if users_data:
                 with open(user_data_path, 'w', encoding='utf-8') as f:
                     json.dump(users_data, f, ensure_ascii=False, indent=2)
-                log(f"✅ Datos guardados correctamente: {users_data}")
+                log(f"save_user_data | ✅ Datos guardados correctamente: {users_data}")
         except Exception as e:
-            log(f"❌ Error al guardar datos: {e}")
+            log(f"save_user_data | ❌ Error al guardar datos: {e}")
 
 # Backup loop asincrónico
 async def backup_loop():
@@ -52,17 +52,22 @@ def responder():
     numero = data.get('numero', '').strip()
 
     if not numero:
-        log("❌ Número no proporcionado")
+        log("responder | ❌ Número no proporcionado")
         return jsonify({'error': 'Número no proporcionado'}), 400
 
-    log(f"📨 {numero}: {mensaje}")
-    user_data = users_data.setdefault(numero, {CHAT_BOT_LEVEL: 'root'})
-
+    log(f"responder | 📨 {numero}: {mensaje}")
+    answer = ''
+    #user_data = users_data.setdefault(numero, {CHAT_BOT_LEVEL: 'root'})
+    
+    if not users_data.get(numero): # Si no hay datos del usuario, responder con la raiz.
+        users_data[numero] = {CHAT_BOT_LEVEL: 'root'}
+        answer = MENU['root']['message']
+    # Obtención de datos del usuario:
+    user_data = users_data.get(numero)
     current_level = user_data.get(CHAT_BOT_LEVEL, 'root')
     current_node = MENU.get(current_level, {})
     options = current_node.get('options', {})
-    answer = ''
-
+    # Respuesta automática:
     if mensaje in options:
         next_level = options[mensaje]
         if next_level in MENU:
@@ -77,19 +82,19 @@ def responder():
             users_data[numero][CHAT_BOT_LEVEL] = back_level
             answer = MENU[back_level]['message']
         else:
-            log(f"⚠️ Menú sin 'back': {current_level}")
+            log(f"responder | ⚠️ Menú sin 'back': {current_level}")
     else:
-        log(f"⚠️ Ignorando mensaje de {numero}: {mensaje}")
+        log(f"responder | ⚠️ Ignorando mensaje de {numero}: {mensaje}")
 
     #asyncio.run(save_user_data())
     return jsonify({'respuesta': answer})
 
 # Manejo de salida limpia
 def shutdown_handler(sig, frame):
-    log("🛑 Señal de salida recibida, guardando datos...")
+    log("shutdown_handler | 🛑 Señal de salida recibida, guardando datos...")
     loop = asyncio.get_event_loop()
     loop.run_until_complete(save_user_data())
-    log("👋 Datos guardados. Saliendo...")
+    log("shutdown_handler | 👋 Datos guardados. Saliendo...")
     os._exit(0)
 
 if __name__ == '__main__':

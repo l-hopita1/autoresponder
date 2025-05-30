@@ -9,13 +9,17 @@
 - 28 de mayo de 2025 22:37 - [1.0.3]
     - Agregado:
         - Parámetro TESTING para evitar el uso de filtros y ver si funciona correctamente en otro whatsapp.
-        - Nueva dependencia de pyyaml en "python_backend/requirements.txt"
+        - Nueva dependencia de pyyaml en "python_backend/requirements.txt".
     - Modificado:
         - Menú en YAML en vez de JSON para facilitar modificaciones.
         - Cache local en .gitignore
     - Borrado:
         - Cache local
-- 30 de mayo de 2025 14:29 - [1.0.4]
+- 30 de mayo de 2025 14:29 - [1.1.0]
     - Agregado:
-        - Si no se encuentra un estado del número del cliente, se le responde con la raiz del menú.
-        - Guardado de datos de usuario en archivo local.
+        - Backup de datos de usuario en archivo local.
+- 30 de mayo de 2025 16:00 - [1.1.1]
+    - Agregado:
+        - Se agrega la función a cada loggeo para debuggear más rápido.
+    - Modificación:
+        - Si no se encuentra el estado del usuario, se le responde con la raiz del menú.
