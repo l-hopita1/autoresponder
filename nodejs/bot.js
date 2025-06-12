@@ -4,7 +4,7 @@ const axios = require('axios');
 const WAWebJS = require('whatsapp-web.js');
 const TESTING = false;
 const client = new Client();
-const version = '1.1.2'
+const version = '1.1.3'
 function log(msg) {
     const timestamp = new Date().toLocaleString('es-AR');
     console.log(`[${timestamp}] ${msg}`);

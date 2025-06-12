@@ -78,35 +78,28 @@ Consultá el archivo [CHANGELOG](CHANGELOG) para ver el historial completo de ve
 ---
 
 ## 🔮 Próximas versiones
-### 🧪 1.0.x
-- Almacenamiento *local* del estado del cliente: 
-   - Para evitar spam
 
-### 1.1.0
+### 1.2.X
 - Actualización automática de python backend
    - Así no hay que entrar a ejecutar los cambios a mano. Aumentaría la velocidad de actualizaciones.
-
-### ✅ 1.2.0
+### 1.3.X
 - Almacenamiento en *Google Sheet* del estado del cliente:
   - Número de celular
   - Cantidad de interacciones
   - Último estado del menú
   - Última fecha de interacción
-
-### ⏳ 1.3.0
+### 1.4.X
 - Seguimiento automático por inactividad con reintentos configurables.
-
-### ✉️ 1.4.0
+### 1.5.X
 - Seguimiento personalizado en base al último mensaje enviado.
-
-### 📊 2.0.0
+### 1.6.X
 - Métricas avanzadas por cliente:
   - Cantidad de consultas
   - Monto estimado de compra
   - Nivel de interés calculado
-
-### 📈 3.0.0
+#### 1.7.X
 - Seguimiento de etapas de venta por cliente e instalación.
+### 1.8.X
 - Gestión avanzada de oportunidades comerciales.
 
 ---

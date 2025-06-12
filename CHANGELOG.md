@@ -33,3 +33,6 @@
     - Modificado:
         - Se cambia el nombre de la variable de "numero" a "number".
         - Se cambia el nombre de la variable de "mensaje" a "message".
+- 12 de junio de 2025 19:55 - [1.1.3]
+    - Modificado:
+        - Se modifica en el menu.yaml la frase: "Si podés, adjuntá una factura de luz actualizada." por "Si podés, adjuntá la útima factura de luz así podemos ver tu consumo histórico."
