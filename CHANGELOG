@@ -23,3 +23,13 @@
         - Se agrega la función a cada loggeo para debuggear más rápido.
     - Modificación:
         - Si no se encuentra el estado del usuario, se le responde con la raiz del menú.
+- 11 de junio de 2025 23:05 - [1.1.2]
+    - Agregado:
+        - "users_data.json" en gitignore para no borrar los datos al actualizar los archivos provenientes del repositorio.
+        - en "bot.js" envio los últimos 50 mensajes del chat al backend.
+        - version en loggeo inicial de "bot.js".
+        - valido si hay que responder o si un humano ya le respondió.
+        - "normalize" una función para normalizar mensajes para fácil comparación.
+    - Modificado:
+        - Se cambia el nombre de la variable de "numero" a "number".
+        - Se cambia el nombre de la variable de "mensaje" a "message".

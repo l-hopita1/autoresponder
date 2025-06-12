@@ -4,11 +4,13 @@ const axios = require('axios');
 const WAWebJS = require('whatsapp-web.js');
 const TESTING = false;
 const client = new Client();
-
+const version = '1.1.2'
 function log(msg) {
     const timestamp = new Date().toLocaleString('es-AR');
     console.log(`[${timestamp}] ${msg}`);
 }
+
+log(`bot.js | 👨🏼‍💻 version: ${version}`)
 
 client.on('qr', qr => {
     qrcode.generate(qr, { small: true });
@@ -19,9 +21,17 @@ client.on('ready', () => {
 });
 
 client.on('message', async msg => {
+    // Datos del mensaje:
     const contact = await msg.getContact();
+    const chat = await msg.getChat();
     const messageDate = new Date(msg.timestamp * 1000);
     const hoursDiff = (Date.now() - messageDate.getTime()) / 36e5;
+    const lastMessages = await chat.fetchMessages({ limit: 50 });
+    const messageHistory = lastMessages.map(m => ({
+        fromMe: m.fromMe,
+        timestamp: m.timestamp,
+        body: m.body
+    }));
 
     // Ignoro mensajes:
     if (msg.from.includes('status')) return;
@@ -46,8 +56,9 @@ client.on('message', async msg => {
     log(`📩 Mensaje de +${msg.from}: ${msg.body}`);
     try {
         const response = await axios.post('http://localhost:5000/responder', {
-            mensaje: msg.body,
-            numero: msg.from
+            message: msg.body,
+            number: msg.from,
+            messageHistory: messageHistory
         }, {
             headers: {
                 'Content-Type': 'application/json'
