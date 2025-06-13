@@ -5,17 +5,26 @@ const qrcode = require('qrcode-terminal');
 const axios = require('axios');
 const WAWebJS = require('whatsapp-web.js');
 const TESTING = false;
-const version = '1.1.4';
+const version = '1.1.5';
 const client = new Client({
     authStrategy: new LocalAuth()
 });
 
 function log(msg) {
-    const timestamp = new Date().toLocaleString('es-AR');
+    const timestamp = new Date().toLocaleString('es-AR', {
+        hour12: false,  // 👈 Esto desactiva AM/PM
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
     console.log(`[${timestamp}] ${msg}`);
 }
 
-log(`bot.js | 👨🏼‍💻 version: ${version}`);
+if (TESTING) log(`bot.js | 👨🏼‍💻 version en DESARROLLO: ${version}`);
+else log(`bot.js | 👨🏼‍💻 version: ${version}`);
 
 client.on('qr', qr => {
     log("📷 Vincular un dispositivo nuevo con este QR:");
@@ -41,15 +50,16 @@ client.on('message', async msg => {
     if (msg.from.includes('status')) return;
     if (msg.from.includes('@g.us')) return;
     if (contact.isMyContact && !TESTING) {
-        log(`✔️ Filtrado: Contacto guardado en +${msg.from}`);
+        contact.name
+        log(`🛡️ Filtrado: ${contact.name} es un contacto guardado`);
         return;
     }
     if (!msg.timestamp || msg.timestamp < 1600000000) {
-        log(`⌛ Filtrado: Mensaje viejo de +${msg.from}`);
+        log(`🛡️ Filtrado: Mensaje viejo de +${msg.from}`);
         return;
     }
     if (hoursDiff > 24) {
-        log(`⌛ Filtrado: Mensaje con más de 24 hs de +${msg.from}`);
+        log(`🛡️ Filtrado: Mensaje con más de 24 hs de +${msg.from}`);
         return;
     }
     if (msg.from == msg.body) {
