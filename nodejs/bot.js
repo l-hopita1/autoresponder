@@ -1,18 +1,24 @@
-const { Client, MessageMedia } = require('whatsapp-web.js');
+
+const fs = require('fs');
+const { Client, MessageMedia, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const axios = require('axios');
 const WAWebJS = require('whatsapp-web.js');
 const TESTING = false;
-const client = new Client();
-const version = '1.1.3'
+const version = '1.1.4';
+const client = new Client({
+    authStrategy: new LocalAuth()
+});
+
 function log(msg) {
     const timestamp = new Date().toLocaleString('es-AR');
     console.log(`[${timestamp}] ${msg}`);
 }
 
-log(`bot.js | 👨🏼‍💻 version: ${version}`)
+log(`bot.js | 👨🏼‍💻 version: ${version}`);
 
 client.on('qr', qr => {
+    log("📷 Vincular un dispositivo nuevo con este QR:");
     qrcode.generate(qr, { small: true });
 });
 
@@ -21,7 +27,6 @@ client.on('ready', () => {
 });
 
 client.on('message', async msg => {
-    // Datos del mensaje:
     const contact = await msg.getContact();
     const chat = await msg.getChat();
     const messageDate = new Date(msg.timestamp * 1000);
@@ -33,7 +38,6 @@ client.on('message', async msg => {
         body: m.body
     }));
 
-    // Ignoro mensajes:
     if (msg.from.includes('status')) return;
     if (msg.from.includes('@g.us')) return;
     if (contact.isMyContact && !TESTING) {
@@ -75,20 +79,5 @@ client.on('message', async msg => {
     }
 });
 
-/**
- * @param {import('whatsapp-web.js').Message} msg
- */
-async function alreadyReplied(msg) {
-    const chat = await msg.getChat();
-    const lastMessages = await chat.fetchMessages({ limit: 50 });
-    return lastMessages.some(m => {
-        if (m.fromMe && m.body) {
-            log(`⚠ No se respondió a +${m.from} porque ya se le envió un mensaje el ${new Date(m.timestamp * 1000).toLocaleString()}`);
-            return true;
-        }
-        return false;
-    });
-}
 
 client.initialize();
-log("📷 Vincular un dispositivo nuevo con este QR:");

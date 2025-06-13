@@ -14,17 +14,17 @@
 ### 💻 Software necesario
 
 - [Git](https://git-scm.com/downloads/)
-    - Verificar instalación:
+    - Para verificar instalación ejecutar:
       ```bash
       git --version
       ```
 - [Python 3.8+](https://www.python.org/downloads/)
-    - Verificar instalación:
+    - Para verificar instalación ejecutar:
       ```bash
       python --version
       ```
 - [Node.js 16+](https://nodejs.org/es/)
-    - Verificar instalación:
+    - Para verificar instalación ejecutar:
       ```bash
       node --version
       ```
@@ -56,18 +56,23 @@
 
 1. **Abrí una consola nueva**, navegá al proyecto y ejecutá el bot de WhatsApp:
    ```bash
-   cd "Calares/Gestion del cliente/autoresponder"
+   cd "C:\Users\Hansen\Desktop\autoresponder"
    node nodejs/bot.js
    ```
-   > Escaneá el código QR desde el celular para vincular tu cuenta de WhatsApp.
+   > Si es la primera vez, escaneá el código QR desde el celular para vincular tu cuenta de WhatsApp.
 
 2. **En otra consola**, asegurá que estés en el último release y ejecutá el servidor backend de Python:
    ```bash
-   cd "Calares/Gestion del cliente/autoresponder"
+   cd "C:\Users\Hansen\Desktop\autoresponder"
    git fetch --all
    git reset --hard origin/main
    python python_backend/app.py
    ```
+## 🔒 Cerrar el programa
+
+1. **Abrir la primer consola (whatsapp web js)**, apretar la siguiente combinación de teclas **CTRL**+ **C**.
+2. **Abrir la segunda consola (código backend)**, apretar la siguiente combinación de teclas **CTRL**+ **C**.
+> Revisar en la terminal un mensaje afirmando que se guardaron los datos de los contactos.
 
 ---
 
@@ -97,7 +102,7 @@ Consultá el archivo [CHANGELOG](CHANGELOG) para ver el historial completo de ve
   - Cantidad de consultas
   - Monto estimado de compra
   - Nivel de interés calculado
-#### 1.7.X
+### 1.7.X
 - Seguimiento de etapas de venta por cliente e instalación.
 ### 1.8.X
 - Gestión avanzada de oportunidades comerciales.

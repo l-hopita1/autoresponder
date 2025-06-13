@@ -36,3 +36,10 @@
 - 12 de junio de 2025 19:55 - [1.1.3]
     - Modificado:
         - Se modifica en el menu.yaml la frase: "Si podés, adjuntá una factura de luz actualizada." por "Si podés, adjuntá la útima factura de luz así podemos ver tu consumo histórico."
+- 12 de junio de 2025 21:11 - [1.1.4]
+    - Agregado:
+        - Se almacena la sesión de whatsapp en la carpeta ".wwebjs_auth"
+    - Modificado:
+        - gitignore reducido a los archivos y carpetas específicas.
+    - Eliminado:
+        - "alreadyReplied" porque fué migrada al backend.
