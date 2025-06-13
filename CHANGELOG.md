@@ -43,7 +43,10 @@
         - gitignore reducido a los archivos y carpetas específicas.
     - Eliminado:
         - "alreadyReplied" porque fué migrada al backend.
-- 12 de junio de 2025 21:55
+- 12 de junio de 2025 21:55 - [1.1.5]
     - Modificado:
         - El filtro de contactos guardados indica cuál es el nombre de contacto.
         - Se cambia el formato de hora a 24 hs en los mensajes del logger.
+- 13 de junio de 2025 12:06 - [1.1.6]
+    - Agregado:
+        - en "bot.js" se agregaron "botones" y "menu" de prueba.

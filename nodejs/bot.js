@@ -1,11 +1,13 @@
 
 const fs = require('fs');
-const { Client, MessageMedia, LocalAuth } = require('whatsapp-web.js');
+const { Client, MessageMedia, LocalAuth, Buttons } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const axios = require('axios');
 const WAWebJS = require('whatsapp-web.js');
-const TESTING = false;
-const version = '1.1.5';
+const TESTING = true;
+const version = '1.1.6';
+
+
 const client = new Client({
     authStrategy: new LocalAuth()
 });
@@ -36,6 +38,8 @@ client.on('ready', () => {
 });
 
 client.on('message', async msg => {
+    
+    // Datos del mensaje enviado:
     const contact = await msg.getContact();
     const chat = await msg.getChat();
     const messageDate = new Date(msg.timestamp * 1000);
@@ -46,7 +50,8 @@ client.on('message', async msg => {
         timestamp: m.timestamp,
         body: m.body
     }));
-
+    
+    // Filtro mensajes no deseados:
     if (msg.from.includes('status')) return;
     if (msg.from.includes('@g.us')) return;
     if (contact.isMyContact && !TESTING) {
@@ -68,6 +73,30 @@ client.on('message', async msg => {
     }
 
     log(`📩 Mensaje de +${msg.from}: ${msg.body}`);
+
+    if (msg.body.toLowerCase() === 'botones') {
+        const botones = new Buttons(
+            '¿Qué querés hacer?',
+            [
+                { body: '1️⃣ Opción 1' },
+                { body: '2️⃣ Opción 2' },
+                { body: '3️⃣ Opción 3' }
+            ],
+            'Menú Principal',
+            'Elegí una opción'
+        );
+        client.sendMessage(msg.from, botones);
+        log(`📨 Botones enviados`);
+        return;
+    }
+    else if (msg.body.toLowerCase() === 'menu') {
+        const menu = `🟢 *¿Qué querés hacer?*\n` +
+                    `\n1️⃣ Ver estado` +
+                    `\n2️⃣ Configurar` +
+                    `\n3️⃣ Ayuda`;
+
+        client.sendMessage(msg.from, menu);
+    }
     try {
         const response = await axios.post('http://localhost:5000/responder', {
             message: msg.body,
