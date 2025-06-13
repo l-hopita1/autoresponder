@@ -49,4 +49,4 @@
         - Se cambia el formato de hora a 24 hs en los mensajes del logger.
 - 13 de junio de 2025 12:06 - [1.1.6]
     - Agregado:
-        - en "bot.js" se agregaron "botones" y "menu" de prueba.
+        - en "bot.js" se agregaron "botones", "lista" y "menu" de prueba.
