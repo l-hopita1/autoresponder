@@ -64,3 +64,7 @@
 - 15 de julio de 2025 02:33 - [1.2.3]
     - Modificado
         - Actualización de terminal
+- 15 de julio de 2025 02:57 - [1.2.4]
+    - Modificado
+        - Junto todas las terminales en una ventana de Windows PowerShell.
+        - Unifico loggeo de versión.

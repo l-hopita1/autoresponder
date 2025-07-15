@@ -1,5 +1,12 @@
 import subprocess, os
+from datetime import datetime
 
+version = '1.2.4'
+
+def log(msg):
+    print(f"[{datetime.now():%d/%m/%Y %H:%M:%S}] | {msg}")
+log(f'update_and_run | 👨🏼‍💻 version: ${version}')
+    
 # Ruta del proyecto relativa a este script
 project_path = os.path.dirname(os.path.abspath(__file__))
 os.chdir(project_path)

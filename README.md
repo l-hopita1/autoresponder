@@ -54,8 +54,10 @@
 
 ## 🚀 Ejecución del programa
 
-1. **Hacer doble click en el archivo RUN.bat**, verifica que se abran dos ventanas de comandos y no se lean errores en el logger.
-
+- **Hacer doble click en el archivo RUN.bat**, verifica que se abran las siguientes tres ventanas de terminales de Windows PowerShell:
+  1. *Actulizador*: La primer ventana que verifica que el código sea el último commit en main del repositorio.
+  2. *Python Backend*: La segunda ventana que crea las respuestas de whatsapp.
+  3. *Whatsapp Web JS*: La tercer y última ventana que recive y envía mensajes de whatsapp al backend.
 ## 🔒 Cerrar el programa
 
 1. **Abrir la primer consola (whatsapp web js)**, apretar la siguiente combinación de teclas **CTRL**+ **C**.

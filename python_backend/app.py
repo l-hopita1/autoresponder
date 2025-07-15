@@ -2,9 +2,6 @@ import os, yaml, json, asyncio, signal
 from flask import Flask, request, jsonify
 from datetime import datetime
 
-TESTING = True
-version = '1.0.0'
-
 app = Flask(__name__)
 CHAT_BOT_LEVEL = 'CHAT_BOT_LEVEL'
 USER_DATA_FILE_NAME = 'users_data.json'
@@ -15,12 +12,7 @@ save_lock = asyncio.Lock()
 
 def log(msg):
     print(f"[{datetime.now():%d/%m/%Y %H:%M:%S}] | {msg}")
-
-if TESTING:
-    log(f'app.py | 👨🏼‍💻 version en DESARROLLO: {version}')
-else:
-    log(f'app.py | 👨🏼‍💻 version: {version}')
-
+    
 # Cargar menú
 with open(os.path.join(os.path.dirname(__file__), 'menu.yaml'), encoding='utf-8') as f:
     MENU = yaml.safe_load(f)

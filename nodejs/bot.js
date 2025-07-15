@@ -25,9 +25,6 @@ function log(msg) {
     console.log(`[${timestamp}] ${msg}`);
 }
 
-if (TESTING) log(`bot.js | 👨🏼‍💻 version en DESARROLLO: ${version}`);
-else log(`bot.js | 👨🏼‍💻 version: ${version}`);
-
 client.on('qr', qr => {
     log("📷 Vincular un dispositivo nuevo con este QR:");
     qrcode.generate(qr, { small: true });
