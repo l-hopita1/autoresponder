@@ -47,3 +47,17 @@
     - Modificado:
         - El filtro de contactos guardados indica cuál es el nombre de contacto.
         - Se cambia el formato de hora a 24 hs en los mensajes del logger.
+- 15 de julio de 2025 01:50 - [1.2.0]
+    - Agregado:
+        - Nueva prueba de crm.py exitosa. Se puede leer una hoja de cálculo de google y modificarla.
+        - Agrego versión en app.py
+        - Se agrega un nuevo archivo python que ejecuta las dos tareas para habilitar el chat.
+        - Se agrega un archivo ejecutable *RUN.bat* para facilitar las actualizaciones automáticas y simplificar la ejecución del programa.
+    - Modificado
+        - Elimino warning de asyncio al cambiar la declaración de las tareas en app.py
+- 15 de julio de 2025 02:08 - [1.2.1]
+    - Modificado:
+        - Se abren las terminales con powershell
+- 15 de julio de 2025 02:27 - [1.2.2]
+    - Modificado:
+        - Se abren las terminales con Windows PowerShell
