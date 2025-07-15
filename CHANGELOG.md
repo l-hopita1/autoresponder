@@ -61,3 +61,6 @@
 - 15 de julio de 2025 02:27 - [1.2.2]
     - Modificado:
         - Se abren las terminales con Windows PowerShell
+- 15 de julio de 2025 02:33 - [1.2.3]
+    - Modificado
+        - Actualización de terminal
