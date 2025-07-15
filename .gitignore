@@ -4,3 +4,4 @@ python_backend/users_data.json
 *.wwebjs_*/
 *__pycache__*/
 *node_modules/
+*credentials.json

@@ -2,6 +2,9 @@ import os, yaml, json, asyncio, signal
 from flask import Flask, request, jsonify
 from datetime import datetime
 
+TESTING = True
+version = '1.0.0'
+
 app = Flask(__name__)
 CHAT_BOT_LEVEL = 'CHAT_BOT_LEVEL'
 USER_DATA_FILE_NAME = 'users_data.json'
@@ -12,6 +15,11 @@ save_lock = asyncio.Lock()
 
 def log(msg):
     print(f"[{datetime.now():%d/%m/%Y %H:%M:%S}] | {msg}")
+
+if TESTING:
+    log(f'app.py | 👨🏼‍💻 version en DESARROLLO: {version}')
+else:
+    log(f'app.py | 👨🏼‍💻 version: {version}')
 
 # Cargar menú
 with open(os.path.join(os.path.dirname(__file__), 'menu.yaml'), encoding='utf-8') as f:
@@ -105,7 +113,8 @@ def responder():
 # Manejo de salida limpia
 def shutdown_handler(sig, frame):
     log("shutdown_handler | 🛑 Señal de salida recibida, guardando datos...")
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     loop.run_until_complete(save_user_data())
     log("shutdown_handler | 👋 Datos guardados. Saliendo...")
     os._exit(0)
@@ -114,7 +123,8 @@ def normalize(text):
     return ' '.join(text.strip().lower().split())
 
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     backup_task = loop.create_task(backup_loop())
     signal.signal(signal.SIGINT, shutdown_handler)
     app.run(debug=True, port=5000, use_reloader=False)

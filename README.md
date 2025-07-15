@@ -54,20 +54,8 @@
 
 ## 🚀 Ejecución del programa
 
-1. **Abrí una consola nueva**, navegá al proyecto y ejecutá el bot de WhatsApp:
-   ```bash
-   cd "C:\Users\Hansen\Desktop\autoresponder"
-   node nodejs/bot.js
-   ```
-   > Si es la primera vez, escaneá el código QR desde el celular para vincular tu cuenta de WhatsApp.
+1. **Hacer doble click en el archivo RUN.bat**, verifica que se abran dos ventanas de comandos y no se lean errores en el logger.
 
-2. **En otra consola**, asegurá que estés en el último release y ejecutá el servidor backend de Python:
-   ```bash
-   cd "C:\Users\Hansen\Desktop\autoresponder"
-   git fetch --all
-   git reset --hard origin/main
-   python python_backend/app.py
-   ```
 ## 🔒 Cerrar el programa
 
 1. **Abrir la primer consola (whatsapp web js)**, apretar la siguiente combinación de teclas **CTRL**+ **C**.
@@ -83,10 +71,6 @@ Consultá el archivo [CHANGELOG](CHANGELOG) para ver el historial completo de ve
 ---
 
 ## 🔮 Próximas versiones
-
-### 1.2.X
-- Actualización automática de python backend
-   - Así no hay que entrar a ejecutar los cambios a mano. Aumentaría la velocidad de actualizaciones.
 ### 1.3.X
 - Almacenamiento en *Google Sheet* del estado del cliente:
   - Número de celular
