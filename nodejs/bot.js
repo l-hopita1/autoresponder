@@ -70,65 +70,6 @@ client.on('message', async msg => {
     }
 
     log(`📩 Mensaje de +${msg.from}: ${msg.body}`);
-
-    if (msg.body.toLowerCase() === 'botones') {
-        const botones = new Buttons(
-            '¿Qué querés hacer?',
-            [
-                { body: '1️⃣ Opción 1' },
-                { body: '2️⃣ Opción 2' },
-                { body: '3️⃣ Opción 3' }
-            ],
-            'Menú Principal',
-            'Elegí una opción'
-        );
-        client.sendMessage(msg.from, botones);
-        log(`📨 Botones enviados`);
-        return;
-    }
-    else if (msg.body.toLowerCase() === 'menu') {
-        const menu = `🟢 *¿Qué querés hacer?*\n` +
-                    `\n1️⃣ Ver estado` +
-                    `\n2️⃣ Configurar` +
-                    `\n3️⃣ Ayuda`;
-
-        client.sendMessage(msg.from, menu);
-        log(`📨 Menú enviado`);
-        return;
-    }
-    else if (msg.body.toLowerCase() === 'lista') {
-        const sections = [
-            {
-                title: 'Sección 1',
-                rows: [
-                    { id: 'opcion_1', title: 'Opción 1', description: 'Descripción 1' },
-                    { id: 'opcion_2', title: 'Opción 2', description: 'Descripción 2' },
-                ]
-            },
-            {
-                title: 'Sección 2',
-                rows: [
-                    { id: 'opcion_3', title: 'Opción 3', description: 'Descripción 3' },
-                ]
-            }
-        ];
-
-        const list = new List(
-            'Selecciona una opción:',   // Texto principal
-            'Ver opciones',             // Texto del botón para desplegar la lista
-            sections,
-            'Menú Principal',           // Título del menú
-            'Elige una opción para continuar'  // Texto footer o pie
-        );
-
-        try {
-            await client.sendMessage(msg.from, list);
-                log(`📨 Lista enviada`);
-        } catch (error) {
-            log(`❌ Error al enviar lista: ${error.message}`);
-        }
-        return;
-    } 
     try {
         const response = await axios.post('http://localhost:5000/responder', {
             message: msg.body,

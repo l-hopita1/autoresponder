@@ -1,7 +1,7 @@
 import subprocess, os
 from datetime import datetime
 
-version = '1.2.4'
+version = '1.2.5'
 
 def log(msg):
     print(f"[{datetime.now():%d/%m/%Y %H:%M:%S}] | {msg}")

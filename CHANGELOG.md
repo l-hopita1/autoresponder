@@ -68,3 +68,4 @@
     - Modificado
         - Junto todas las terminales en una ventana de Windows PowerShell.
         - Unifico loggeo de versión.
+- 16 de julio de 2025 10:52 - [1.2.5]
