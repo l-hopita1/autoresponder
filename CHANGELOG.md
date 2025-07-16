@@ -74,3 +74,6 @@
 - 16 de julio de 2025 11:16 - [1.2.6]
     - Modificado:
         - Se corrige el estado de TESTING en bot.js
+- 16 de julio de 2025 14:51 - [1.2.7]
+    - Agregado:
+        - En "menu.yaml", se incluyen mensajes del bot viejo para evitar confusión con interación humana.

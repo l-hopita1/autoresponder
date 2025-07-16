@@ -173,3 +173,76 @@ menu_6:
     ¡Te responderemos a la brevedad! Enviá el mayor detalle posible para que podamos asesorarte en tu consulta/presupuesto.
     0. Menú principal
   back: root
+
+# Antiguos
+
+menu_old_root:
+  message: |
+    ¡Seleccione el número de la opción deseada 
+    🌍💚 ¡Hola! ¡Muchas gracias por contactarnos! Puedo ayudarte en forma automática o podés solicitar la atención de nuestros asesores.
+
+    Ingresá el número y hablemos:
+    ⿡. 💡 Paneles fotovoltaicos para electricidad y baterías
+    ⿢. 🏊‍♂ Climatización de pileta
+    ⿣. 🚿 Termotanques solares
+    ⿤. Bomba de calor (aerotermia) para climatización del hogar
+    ⿥. 🛠 Mantenimiento y reparaciones en general, herrería, electricidad, pintura, sanitarios
+    ⿦. 👤 Chatear con un asesor. Atención a empresa
+  back: root
+
+menu_1_old:
+  message: |
+    Seleccione el número de la opción deseada 
+    ✅ Si querés un presupuesto instantáneo de paneles de electricidad y/o baterías, completá este formulario: 
+    https://calaresenergiasrenovables.com/cotizate.php
+
+    Sino, adelantamos por favor lo siguiente:
+    ⿡. Mi objetivo es ahorrar en la factura
+    ⿢. Mi objetivo es tener backup eléctrico ante corte y baja tensión (como un generador)
+    ⿣. Quiero ahorrar y además tener Backup ante corte y baja tension
+    ⿤. Estoy en una zona sin servicio eléctrico
+    ⿥. Menú Anterior
+    ⿠. Menú Principal
+  back: root
+
+menu_1_1_old:
+  message: |
+    Seleccione el número de la opción deseada 
+    Un asesor se contactará contigo. mientras, adelantamos por favor si tu instalación es  trifásica o monofásico. 
+    ¿Estás en etapa de construcción o ya está construido?
+    ¿Qué tipo de techo es?
+    ¿En qué localidad?
+    ⿡. Menú Anterior
+    ⿠. Menú Principal
+  back: root
+
+menu_2_old:
+  message: |
+    Seleccione el número de la opción deseada 
+    Vas a poder disfrutar a una temperatura ideal, extendiendo la temporada de forma ecológica y económica.
+    ⌨ Por favor escribí el número ( 1 / 2 / 3 / 0) de la opción que elijas:
+    ⿢. 📝 Solicitar un presupuesto.
+    ⿣. Menú Anterior
+    ⿠. Menú Principal
+  back: root
+
+menu_2_1_old:
+  message: |
+    Seleccione el número de la opción deseada 
+    ❓ Para ver un listado de las principales preguntas y respuestas, entrá en www.calaresenergiasrenovables.com/dudas/#piscinas
+    📧 Si aún necesitás nuestro asesoramiento, escribinos tu consulta por aquí o a info@calaresenergiasrenovables.com 
+    ⌨ Por favor escribí el número de la opción que elijas ( 1 / 0 )
+    ⿡. Menú Anterior
+    ⿠. Menú Principal
+  back: root
+
+menu_2_2_old:
+  message: |
+    Seleccione el número de la opción deseada 
+    Para climatizar tu pileta, ofrecemos 2 opciones, mantas solares o bombas de calor. 
+    Escribí el número (1 / 2 / 3 / 0) según la opción que elijas:
+    ⿡. 🌞Manta solar
+    ⿢. 🌡Bomba de calor
+    ⿣. Menú Anterior
+    ⿠. Menú Principal
+  back: root
