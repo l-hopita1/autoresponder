@@ -69,3 +69,8 @@
         - Junto todas las terminales en una ventana de Windows PowerShell.
         - Unifico loggeo de versión.
 - 16 de julio de 2025 10:52 - [1.2.5]
+    - Eliminado:
+        - Se borraron las pruebas de menu, lista y botones para evitar confusión.
+- 16 de julio de 2025 11:16 - [1.2.6]
+    - Modificado:
+        - Se corrige el estado de TESTING en bot.js

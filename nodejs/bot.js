@@ -4,7 +4,7 @@ const { Client, MessageMedia, LocalAuth, Buttons, List } = require('whatsapp-web
 const qrcode = require('qrcode-terminal');
 const axios = require('axios');
 const WAWebJS = require('whatsapp-web.js');
-const TESTING = true;
+const TESTING = false;
 const version = '1.1.6';
 
 
