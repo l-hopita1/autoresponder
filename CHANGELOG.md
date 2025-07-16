@@ -77,3 +77,6 @@
 - 16 de julio de 2025 14:51 - [1.2.7]
     - Agregado:
         - En "menu.yaml", se incluyen mensajes del bot viejo para evitar confusión con interación humana.
+- 16 de julio de 2025 15:02 - [1.2.8]
+    - Modificación:
+        - Se separan en dos ejecutables "update_and_run". Para permitir ejecutar las tareas por separado.
