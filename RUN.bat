@@ -1,5 +1,12 @@
 @echo off
 cd /d %~dp0
+echo 🚀 Ejecutando versión 1.2.9
+REM Abrir backend Python en nueva ventana CMD
+start "Backend Python" cmd /k "cd python_backend && python app.py"
 
-REM Ejecuta update_and_run.py en Windows Terminal, en perfil PowerShell
-wt -w 0 nt --title "Actualizador" -p "PowerShell" -d . powershell -NoExit -Command "python ./run.py"
+REM Abrir bot Node.js en nueva ventana CMD
+start "Bot Node.js" cmd /k "cd nodejs && node bot.js"
+
+REM Mensaje final para saber que todo arrancó
+echo ✅ Backend y Bot iniciados en ventanas separadas.
+pause

@@ -80,3 +80,8 @@
 - 16 de julio de 2025 15:02 - [1.2.8]
     - Modificación:
         - Se separan en dos ejecutables "update_and_run". Para permitir ejecutar las tareas por separado.
+- 27 de julio de 2025 18:30 - [1.2.9]
+    - Agregado:
+        - Ahora los desarrolladores pueden acceder al estado del chat bot enviando el mensaje "status".
+    - Modificación:
+        - Se mejora la terminal de ejecución para no tener problemas de ejecución del bot. Con esto se eliminan los errores de compatibilidad con Puppeter.

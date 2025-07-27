@@ -1,4 +1,4 @@
-import os, yaml, json, asyncio, signal
+import os, yaml, json, asyncio, signal, time
 from flask import Flask, request, jsonify
 from datetime import datetime
 
@@ -9,6 +9,8 @@ user_data_path = os.path.join(os.path.dirname(__file__), USER_DATA_FILE_NAME)
 users_data = {}
 backup_task = None
 save_lock = asyncio.Lock()
+initalization_time = f"[{datetime.now():%d/%m/%Y %H:%M:%S}" # Primer tiempo en que está ejecutandose la función.
+last_answer = None
 
 def log(msg):
     print(f"[{datetime.now():%d/%m/%Y %H:%M:%S}] | {msg}")
@@ -42,6 +44,18 @@ async def backup_loop():
     while True:
         await asyncio.sleep(300)
         await save_user_data()
+
+# Estado de programa:
+@app.route('/status', methods=['POST'])
+def status():
+    # Datos de entrada
+    data = request.get_json(force=True)
+    contact_name = data.get('contact_name').strip()
+
+    # Genero el mensaje con el estado del progama:
+    answer = f"""{contact_name}, "app.py" se está ejecutando correctamente: ✅
+    Última respuesta automática: {last_answer}"""
+    return jsonify({'respuesta': answer})
 
 # Ruta principal
 @app.route('/responder', methods=['POST'])

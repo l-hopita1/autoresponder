@@ -5,3 +5,4 @@ python_backend/users_data.json
 *__pycache__*/
 *node_modules/
 *credentials.json
+*secrets.json

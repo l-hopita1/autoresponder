@@ -48,6 +48,7 @@
    ```bash
    cd nodejs
    npm install
+   npm audit fix --force
    ```
 
 ---
@@ -55,9 +56,9 @@
 ## 🚀 Ejecución del programa
 
 - **Hacer doble click en el archivo RUN.bat**, verifica que se abran las siguientes tres ventanas de terminales de Windows PowerShell:
-  1. *Actulizador*: La primer ventana que verifica que el código sea el último commit en main del repositorio.
-  2. *Python Backend*: La segunda ventana que crea las respuestas de whatsapp.
-  3. *Whatsapp Web JS*: La tercer y última ventana que recive y envía mensajes de whatsapp al backend.
+  1. La primer ventana ejecuta el backend y el bot de whatsapp.
+  2. La segunda ventana que crea las respuestas de whatsapp.
+  3. La tercer y última ventana que recive y envía mensajes de whatsapp al backend.
 ## 🔒 Cerrar el programa
 
 1. **Abrir la primer consola (whatsapp web js)**, apretar la siguiente combinación de teclas **CTRL**+ **C**.

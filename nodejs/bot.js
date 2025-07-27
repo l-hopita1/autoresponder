@@ -3,10 +3,6 @@ const fs = require('fs');
 const { Client, MessageMedia, LocalAuth, Buttons, List } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const axios = require('axios');
-const WAWebJS = require('whatsapp-web.js');
-const TESTING = false;
-const version = '1.1.6';
-
 
 const client = new Client({
     authStrategy: new LocalAuth()
@@ -23,6 +19,25 @@ function log(msg) {
         second: '2-digit'
     });
     console.log(`[${timestamp}] ${msg}`);
+}
+log('🚀 Iniciando bot de WhatsApp...');
+
+// Listado de desarrolladores almacenada en el archivo: secrets.json
+// Algo por el estilo:
+// {
+//  "developers": [
+//    "549113440XXXX@c.us",
+//    "549116800XXXX@c.us",
+//  ]
+// }
+
+let DEVELOPERS = [];
+try {
+    const devData = JSON.parse(fs.readFileSync('./secrets.json', 'utf8'));
+    DEVELOPERS = devData.developers || [];
+    log('✅ Lista de desarrolladores actualizada.');
+} catch (err) {
+    log(`❌ No se pudo cargar developers.json: ${err.message}`);
 }
 
 client.on('qr', qr => {
@@ -47,11 +62,30 @@ client.on('message', async msg => {
         timestamp: m.timestamp,
         body: m.body
     }));
-    
+    // Testeo de programa:
+    if (DEVELOPERS.includes(msg.from) && msg.body.includes('status') && contact.isMyContact){
+        try {
+            const response = await axios.post('http://localhost:5000/status', {
+                contact_name: contact.name
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const respuesta = response.data.respuesta;
+            if (respuesta) {
+                client.sendMessage(msg.from, respuesta);
+                log(`🤖 ${contact.name} preguntó el estado y recivió: "${respuesta}"`);
+            }
+        } catch (error) {
+            log(`❌ Error al consultar el backend: ${error.message}`);
+        }
+        return;
+    }
     // Filtro mensajes no deseados:
     if (msg.from.includes('status')) return;
     if (msg.from.includes('@g.us')) return;
-    if (contact.isMyContact && !TESTING) {
+    if (contact.isMyContact) {
         contact.name
         log(`🛡️ Filtrado: ${contact.name} es un contacto guardado`);
         return;
