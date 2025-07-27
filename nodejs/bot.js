@@ -63,7 +63,7 @@ client.on('message', async msg => {
         body: m.body
     }));
     // Testeo de programa:
-    if (DEVELOPERS.includes(msg.from) && msg.body.includes('status') && contact.isMyContact){
+    if (DEVELOPERS.includes(msg.from) && msg.body.includes('Status') && contact.isMyContact){
         try {
             const response = await axios.post('http://localhost:5000/status', {
                 contact_name: contact.name

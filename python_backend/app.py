@@ -9,11 +9,16 @@ user_data_path = os.path.join(os.path.dirname(__file__), USER_DATA_FILE_NAME)
 users_data = {}
 backup_task = None
 save_lock = asyncio.Lock()
-initalization_time = f"[{datetime.now():%d/%m/%Y %H:%M:%S}" # Primer tiempo en que está ejecutandose la función.
+
 last_answer = None
 
+def current_time_str():
+    return f"[{datetime.now():%d/%m/%Y %H:%M:%S}]"
+
+initalization_time = current_time_str() # Primer tiempo en que está ejecutandose la función.
+
 def log(msg):
-    print(f"[{datetime.now():%d/%m/%Y %H:%M:%S}] | {msg}")
+    print(f"[{current_time_str()}] | {msg}")
     
 # Cargar menú
 with open(os.path.join(os.path.dirname(__file__), 'menu.yaml'), encoding='utf-8') as f:
@@ -48,18 +53,23 @@ async def backup_loop():
 # Estado de programa:
 @app.route('/status', methods=['POST'])
 def status():
+    global last_answer
     # Datos de entrada
     data = request.get_json(force=True)
     contact_name = data.get('contact_name').strip()
 
     # Genero el mensaje con el estado del progama:
-    answer = f"""{contact_name}, "app.py" se está ejecutando correctamente: ✅
-    Última respuesta automática: {last_answer}"""
+    answer = f"""*{contact_name}*: Todo bien ✅
+- El backend se está ejecutando desde : {initalization_time}
+- Última respuesta automática: {last_answer}
+- Contador de clientes: {len(users_data)}
+"""
     return jsonify({'respuesta': answer})
 
 # Ruta principal
 @app.route('/responder', methods=['POST'])
 def responder():
+    global last_answer
     # Datos de entrada:
     data = request.get_json(force=True)
     message = data.get('message', '').strip()
@@ -87,7 +97,8 @@ def responder():
     if not users_data.get(number): # Si no hay datos del usuario, responder con la raiz.
         users_data[number] = {CHAT_BOT_LEVEL: 'root'}
         answer = MENU['root']['message']
-
+        last_answer = current_time_str()
+        
     # Obtención de datos del usuario:
     user_data = users_data.get(number)
     current_level = user_data.get(CHAT_BOT_LEVEL, 'root')
@@ -100,9 +111,11 @@ def responder():
         if next_level in MENU:
             users_data[number][CHAT_BOT_LEVEL] = next_level
             answer = MENU[next_level]['message']
+            last_answer = current_time_str()
     elif message == '0':
         users_data[number][CHAT_BOT_LEVEL] = 'root'
         answer = MENU['root']['message']
+        last_answer = current_time_str()
     elif message == '9':
         back_level = current_node.get('back')
         if back_level and back_level in MENU:
@@ -110,10 +123,10 @@ def responder():
             answer = MENU[back_level]['message']
         else:
             log(f"responder | ⚠️ Menú sin 'back': {current_level}")
+        last_answer = current_time_str()
     else:
         log(f"responder | ⚠️ Ignorando mensaje de {number}, el mensaje no es una opción del menú")
 
-    #asyncio.run(save_user_data())
     return jsonify({'respuesta': answer})
 
 # Manejo de salida limpia

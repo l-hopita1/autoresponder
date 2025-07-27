@@ -85,3 +85,6 @@
         - Ahora los desarrolladores pueden acceder al estado del chat bot enviando el mensaje "status".
     - Modificación:
         - Se mejora la terminal de ejecución para no tener problemas de ejecución del bot. Con esto se eliminan los errores de compatibilidad con Puppeter.
+- 27 de julio de 2025 19:25 - [1.2.10]
+    - Modificación:
+        - "Status" brinda más información
