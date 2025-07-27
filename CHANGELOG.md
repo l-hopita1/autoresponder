@@ -88,3 +88,6 @@
 - 27 de julio de 2025 19:25 - [1.2.10]
     - Modificación:
         - "Status" brinda más información
+- 27 de julio de 2025 19:30 - [1.2.11]
+    - Modificación:
+        - Corrección en un log.

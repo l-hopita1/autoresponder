@@ -75,7 +75,7 @@ client.on('message', async msg => {
             const respuesta = response.data.respuesta;
             if (respuesta) {
                 client.sendMessage(msg.from, respuesta);
-                log(`🤖 ${contact.name} preguntó el estado y recivió: "${respuesta}"`);
+                log(`🤖 ${contact.name} preguntó por el estado del programa.`);
             }
         } catch (error) {
             log(`❌ Error al consultar el backend: ${error.message}`);
