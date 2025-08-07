@@ -91,8 +91,12 @@
 - 27 de julio de 2025 19:30 - [1.2.11]
     - Modificación:
         - Corrección en un log.
-- 4 de Agosto de 2025 22:24 - [1.2.12]
+- 4 de agosto de 2025 22:24 - [1.2.12]
     - Agregado:
         - app.py: Más datos del estado de la PC cuando se solicita el "Status"-
     - Modificación:
         - bot.js Se busca optimizar la memoria en RAM. Se reordenan los filtros
+- 7 de agosto de 2025 20:50 - [1.2.13]
+    - Modificación:
+        - Error al calcular el tiempo de demora en 'Status'.
+        - Se elimina los datos de usuario al cargarlos. Se cambia por la cantidad de clientes.

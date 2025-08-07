@@ -29,9 +29,9 @@ if os.path.exists(user_data_path):
     try:
         with open(user_data_path, 'r', encoding='utf-8') as f:
             users_data = dict(json.load(f))
-        log(f"app.py | ✅ Usuarios cargados correctamente: {users_data.items()}")
+        log(f"app.py | ✅ {len(users_data)} usuarios cargados correctamente.")
     except Exception as e:
-        log(f"❌ Error al cargar datos: {e}")
+        log(f"❌ Error al cargar datos-> {e.__class__.__name__}: {e}")
 
 # Guardar usuarios
 async def save_user_data():
@@ -56,7 +56,7 @@ def status():
     global last_answer
     data = request.get_json(force=True)
     contact_name = data.get('contact_name').strip()
-    msg_timestamp = data.get('msg_timestamp').strip()
+    msg_timestamp = data.get('msg_timestamp')
 
     # Datos de proceso y sistema
     process = psutil.Process(os.getpid())
