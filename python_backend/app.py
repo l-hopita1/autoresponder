@@ -1,4 +1,4 @@
-import os, yaml, json, asyncio, signal, time
+import os, yaml, json, asyncio, signal, time, psutil
 from flask import Flask, request, jsonify
 from datetime import datetime
 
@@ -54,15 +54,35 @@ async def backup_loop():
 @app.route('/status', methods=['POST'])
 def status():
     global last_answer
-    # Datos de entrada
     data = request.get_json(force=True)
     contact_name = data.get('contact_name').strip()
+    msg_timestamp = data.get('msg_timestamp').strip()
 
-    # Genero el mensaje con el estado del progama:
+    # Datos de proceso y sistema
+    process = psutil.Process(os.getpid())
+    mem_info = process.memory_info()
+    mem_mb = mem_info.rss / (1024 * 1024)
+    cpu_percent = process.cpu_percent(interval=0.5)
+
+    sys_mem = psutil.virtual_memory()
+    sys_mem_total = sys_mem.total / (1024 * 1024)
+    sys_mem_available = sys_mem.available / (1024 * 1024)
+    sys_cpu_percent = psutil.cpu_percent(interval=0.5)
+
     answer = f"""*{contact_name}*: Todo bien ✅
-- El backend se está ejecutando desde : {initalization_time}
+- El backend se está ejecutando desde: {initalization_time}
 - Última respuesta automática: {last_answer}
 - Contador de clientes: {len(users_data)}
+- Tiempo de respuesta: {time.time()-msg_timestamp} segundos
+
+📊 *Estado del Backend*
+- Uso de RAM (backend): {mem_mb:.2f} MB
+- Uso de CPU (backend): {cpu_percent:.1f} %
+
+💻 *Estado del Sistema*
+- RAM total: {sys_mem_total:.2f} MB
+- RAM libre: {sys_mem_available:.2f} MB
+- Uso total de CPU: {sys_cpu_percent:.1f} %
 """
     return jsonify({'respuesta': answer})
 

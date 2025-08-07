@@ -91,3 +91,8 @@
 - 27 de julio de 2025 19:30 - [1.2.11]
     - Modificación:
         - Corrección en un log.
+- 4 de Agosto de 2025 22:24 - [1.2.12]
+    - Agregado:
+        - app.py: Más datos del estado de la PC cuando se solicita el "Status"-
+    - Modificación:
+        - bot.js Se busca optimizar la memoria en RAM. Se reordenan los filtros
