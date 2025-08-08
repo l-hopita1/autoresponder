@@ -40,7 +40,7 @@ async def save_user_data():
             if users_data:
                 with open(user_data_path, 'w', encoding='utf-8') as f:
                     json.dump(users_data, f, ensure_ascii=False, indent=2)
-                log(f"save_user_data | ✅ Datos guardados correctamente: {users_data.items()}")
+                log(f"save_user_data | ✅ {len(users_data)} usuarios guardados correctamente")
         except Exception as e:
             log(f"save_user_data | ❌ Error al guardar datos: {e}")
 
@@ -56,7 +56,7 @@ def status():
     global last_answer
     data = request.get_json(force=True)
     contact_name = data.get('contact_name').strip()
-    msg_timestamp = data.get('msg_timestamp')
+    msg_timestamp = data.get('msg_timestamp',time.time())
 
     # Datos de proceso y sistema
     process = psutil.Process(os.getpid())
@@ -66,7 +66,7 @@ def status():
 
     sys_mem = psutil.virtual_memory()
     sys_mem_percent = sys_mem.percent
-    sys_mem.total / (1024 * 1024)
+    total_mem_mb  = sys_mem.total / (1024 * 1024)
     sys_cpu_percent = psutil.cpu_percent(interval=0.5)
 
     answer = f"""*{contact_name}*: Todo bien ✅
@@ -76,7 +76,7 @@ def status():
 - Tiempo de respuesta: {(time.time()-msg_timestamp):.1f} segundos
 
 📊 *Estado del Backend*
-- Uso de RAM (backend): {mem_mb:.0f} MB de {sys_mem.total:.0f} MB
+- Uso de RAM (backend): {mem_mb:.0f} MB de {total_mem_mb:.0f} MB
 - Uso de CPU (backend): {cpu_percent:.0f} %
 
 💻 *Estado del Sistema*

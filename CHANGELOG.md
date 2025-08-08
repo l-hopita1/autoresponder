@@ -102,4 +102,9 @@
         - Se elimina los datos de usuario al cargarlos. Se cambia por la cantidad de clientes.
 - 7 de agosto de 2025 20:12 - [1.2.14]
     - Modificación:
-        - Mejoras en datos de "Status".
+        - app.py: Mejoras en datos de "Status".
+- 7 de agosto de 2025 20:21 - [1.2.15]
+    - Agregado:
+        - Se agrega "psutil" como requerimiento del backend. 
+    - Modificación:
+        - app.py: Mejoras en datos de "Status".
