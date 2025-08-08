@@ -1,6 +1,6 @@
 @echo off
 cd /d %~dp0
-echo 🚀 Ejecutando versión 1.2.13
+echo 🚀 Ejecutando versión 1.2.14
 REM Abrir backend Python en nueva ventana CMD
 start "Backend Python" cmd /k "cd python_backend && python app.py"
 

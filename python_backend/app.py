@@ -65,24 +65,23 @@ def status():
     cpu_percent = process.cpu_percent(interval=0.5)
 
     sys_mem = psutil.virtual_memory()
-    sys_mem_total = sys_mem.total / (1024 * 1024)
-    sys_mem_available = sys_mem.available / (1024 * 1024)
+    sys_mem_percent = sys_mem.percent
+    sys_mem.total / (1024 * 1024)
     sys_cpu_percent = psutil.cpu_percent(interval=0.5)
 
     answer = f"""*{contact_name}*: Todo bien ✅
 - El backend se está ejecutando desde: {initalization_time}
 - Última respuesta automática: {last_answer}
 - Contador de clientes: {len(users_data)}
-- Tiempo de respuesta: {time.time()-msg_timestamp} segundos
+- Tiempo de respuesta: {(time.time()-msg_timestamp):.1f} segundos
 
 📊 *Estado del Backend*
-- Uso de RAM (backend): {mem_mb:.2f} MB
-- Uso de CPU (backend): {cpu_percent:.1f} %
+- Uso de RAM (backend): {mem_mb:.0f} MB de {sys_mem.total:.0f} MB
+- Uso de CPU (backend): {cpu_percent:.0f} %
 
 💻 *Estado del Sistema*
-- RAM total: {sys_mem_total:.2f} MB
-- RAM libre: {sys_mem_available:.2f} MB
-- Uso total de CPU: {sys_cpu_percent:.1f} %
+- Uso de RAM: {sys_mem_percent:.0f} %
+- Uso de CPU: {sys_cpu_percent:.0f} %
 """
     return jsonify({'respuesta': answer})
 

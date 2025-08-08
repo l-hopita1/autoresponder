@@ -100,3 +100,6 @@
     - Modificación:
         - Error al calcular el tiempo de demora en 'Status'.
         - Se elimina los datos de usuario al cargarlos. Se cambia por la cantidad de clientes.
+- 7 de agosto de 2025 20:12 - [1.2.14]
+    - Modificación:
+        - Mejoras en datos de "Status".
