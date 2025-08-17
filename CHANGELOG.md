@@ -108,3 +108,9 @@
         - Se agrega "psutil" como requerimiento del backend. 
     - Modificación:
         - app.py: Mejoras en datos de "Status".
+- 16 de agosto de 2025 22:07 - [1.2.16]
+    - Agregado:
+        - launcher.py: Permite la ejecución del backend y node.js en una única terminal con el logger unido.
+    - Modificado:
+        - Mensaje y log de "Status".
+        - Mejoras en app.py y node.js para cerrar tareas.

@@ -7,43 +7,29 @@ const client = new Client({
     authStrategy: new LocalAuth()
 });
 
-function log(msg) {
-    const timestamp = new Date().toLocaleString('es-AR', {
-        hour12: false,
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-    });
-    console.log(`[${timestamp}] ${msg}`);
-}
-
-log('🚀 Iniciando bot de WhatsApp...');
+console.log('🚀 Iniciando bot de WhatsApp...');
 
 // Cargar lista de desarrolladores desde secrets.json
 let DEVELOPERS = [];
 try {
     const devData = JSON.parse(fs.readFileSync('./secrets.json', 'utf8'));
     DEVELOPERS = devData.developers || [];
-    log('✅ Lista de desarrolladores actualizada.');
+    console.log('✅ Lista de desarrolladores actualizada.');
 } catch (err) {
-    log(`❌ No se pudo cargar developers.json: ${err.message}`);
+    console.log(`❌ No se pudo cargar secrets.json: ${err.message}`);
 }
 
 client.on('qr', qr => {
-    log("📷 Vincular un dispositivo nuevo con este QR:");
+    console.log("📷 Vincular un dispositivo nuevo con este QR:");
     qrcode.generate(qr, { small: true });
 });
 
 client.on('ready', () => {
-    log('✅ Cliente de WhatsApp en ejecución!');
+    console.log('✅ Cliente de WhatsApp en ejecución!');
 });
 
 client.on('message', async msg => {
     try {
-        // Filtros tempranos
         if (
             msg.from.includes('status') ||
             msg.from.includes('@g.us') ||
@@ -55,11 +41,10 @@ client.on('message', async msg => {
         const hoursDiff = (Date.now() - messageDate.getTime()) / 36e5;
         if (hoursDiff > 24) return;
 
-        // Obtener contacto:
         const contact = await msg.getContact();
         if (contact.isMyContact) {
-            // Si es un desarrollador y quiere consultar el estado
             if (DEVELOPERS.includes(msg.from) && msg.body.includes('Status')) {
+                console.log(`🤖 ${contact.name || msg.from} preguntó por el estado del programa.`);
                 const response = await axios.post('http://localhost:5000/status', {
                     contact_name: contact.name || 'Usuario',
                     msg_timestamp: msg.timestamp
@@ -67,28 +52,24 @@ client.on('message', async msg => {
                 const respuesta = response.data.respuesta;
                 if (respuesta) {
                     await client.sendMessage(msg.from, respuesta);
-                    log(`🤖 ${contact.name || msg.from} preguntó por el estado del programa.`);
+                    console.log(`🤖 Se le respondió a ${contact.name || msg.from}.`);
                 }
                 return;
-            }
-            // Es un contacto guardado, no responder.
-            else { 
-                log(`🛡️ Filtrado: ${contact.name || msg.from} es un contacto guardado`);
+            } else { 
+                console.log(`🛡️ Filtrado: ${contact.name || msg.from} es un contacto guardado`);
                 return;
             }    
         }
-        log(`📩 Mensaje de +${msg.from}`)
-        // Obtener historial reciente del chat
+
         const chat = await msg.getChat();
-        let lastMessages = await chat.fetchMessages({ limit: 20 }); // Limitar para ahorrar RAM
+        let lastMessages = await chat.fetchMessages({ limit: 20 });
         const messageHistory = lastMessages.map(m => ({
             fromMe: m.fromMe,
             timestamp: m.timestamp,
             body: m.body
         }));
-        lastMessages = null; // liberar explícitamente
+        lastMessages = null;
 
-        // Llamar al backend Flask
         const response = await axios.post('http://localhost:5000/responder', {
             message: msg.body,
             number: msg.from,
@@ -98,12 +79,24 @@ client.on('message', async msg => {
         const respuesta = response.data.respuesta;
         if (respuesta) {
             await client.sendMessage(msg.from, respuesta);
-            log(`📨 Respondido a +${msg.from}`);
+            console.log(`📨 Respondido a +${msg.from}`);
         }
 
     } catch (error) {
-        log(`❌ Error al procesar mensaje: ${error.message}`);
+        console.log(`❌ Error al procesar mensaje: ${error.message}`);
     }
 });
+
+// Manejo de cierre
+function shutdown() {
+    console.log('🛑 Señal de salida recibida, cerrando cliente de WhatsApp...');
+    client.destroy();
+    console.log('✅ Cliente de WhatsApp cerrado. Saliendo...');
+    process.exit(0);
+}
+
+// Capturar Ctrl+C
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
 
 client.initialize();

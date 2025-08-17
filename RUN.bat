@@ -1,12 +1,6 @@
 @echo off
-cd /d %~dp0
-echo 🚀 Ejecutando versión 1.2.15
-REM Abrir backend Python en nueva ventana CMD
-start "Backend Python" cmd /k "cd python_backend && python app.py"
+REM Cambiar al directorio del script
+cd /d "%~dp0"
 
-REM Abrir bot Node.js en nueva ventana CMD
-start "Bot Node.js" cmd /k "cd nodejs && node bot.js"
-
-REM Mensaje final para saber que todo arrancó
-echo ✅ Backend y Bot iniciados en ventanas separadas.
-pause
+REM Ejecutar el launcher
+start "Autoresponder" cmd /k "python launcher.py"
