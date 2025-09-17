@@ -15,6 +15,14 @@ def stream_reader(prefix, stream):
         log(prefix, line.rstrip())
     stream.close()
 
+# Cargar versión del programa desde VERSION.txt
+version_file = os.path.join(os.path.dirname(__file__), "python_backend/VERSION.txt")
+if os.path.exists(version_file):
+    with open(version_file, "r", encoding="utf-8") as f:
+        APP_VERSION = f.read().strip()
+else:
+    APP_VERSION = "Versión desconocida"
+
 
 def launch_process(name, cmd, cwd):
     """Lanza un proceso y loguea stdout/stderr en hilos separados"""
@@ -51,7 +59,7 @@ def terminate_process(proc, name):
 def main():
     
     base_path = os.path.dirname(os.path.abspath(__file__))
-    log(f"LAUNCHER", "🚀 Ejecutando versión 1.2.16")
+    log(f"LAUNCHER", f"🚀 Ejecutando versión {APP_VERSION}")
 
     backend_path = os.path.join(base_path, "python_backend", "app.py")
     bot_path = os.path.join(base_path, "nodejs", "bot.js")

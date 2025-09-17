@@ -24,6 +24,14 @@ def current_time_str():
 
 initialization_time = current_time_str()
 
+# Cargar versión del programa desde VERSION.txt
+version_file = os.path.join(os.path.dirname(__file__), "VERSION.txt")
+if os.path.exists(version_file):
+    with open(version_file, "r", encoding="utf-8") as f:
+        APP_VERSION = f.read().strip()
+else:
+    APP_VERSION = "Versión desconocida"
+
 # Cargar menú
 with open(os.path.join(os.path.dirname(__file__), 'menu.yaml'), encoding='utf-8') as f:
     MENU = yaml.safe_load(f)
@@ -87,6 +95,7 @@ def status():
 
     answer = f"""*{contact_name}*:
 ✅ *Datos del Backend:*
+- Versión: {APP_VERSION}
 - Fecha de inicio: {initialization_time}
 - Última respuesta automática: {last_answer}
 - Contador de clientes: {len(users_data)}
