@@ -63,17 +63,10 @@ async def backup_loop():
     try:
         while True:
             await asyncio.sleep(300)
+            print("backup_loop | Ejecutando...")
             await save_user_data()
     except asyncio.CancelledError:
         print("backup_loop | Cancelado")
-
-async def status_loop():
-    try:
-        while True:
-            await asyncio.sleep(300)
-            await save_user_data()
-    except asyncio.CancelledError:
-        print("status_loop | Cancelado")
 
 # --- Endpoints ---
 @app.route('/status', methods=['POST'])
@@ -171,7 +164,6 @@ def responder():
 async def main():
     # Lanzar loops de backup
     backup_task = asyncio.create_task(backup_loop())
-    status_task = asyncio.create_task(status_loop())
 
     # Lanzar Flask en thread separado
     def run_flask():

@@ -26,6 +26,9 @@ client.on('qr', qr => {
 
 client.on('ready', () => {
     console.log('✅ Cliente de WhatsApp en ejecución!');
+
+    // 🚀 Iniciar loop diario de status
+    startDailyStatusLoop();
 });
 
 client.on('message', async msg => {
@@ -87,6 +90,35 @@ client.on('message', async msg => {
     }
 });
 
+// --- 🔄 Loop diario de status ---
+function startDailyStatusLoop() {
+    const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
+    async function sendDailyStatus() {
+        for (const dev of DEVELOPERS) {
+            try {
+                const response = await axios.post('http://localhost:5000/status', {
+                    contact_name: 'Reporte automático',
+                    msg_timestamp: Date.now() / 1000
+                });
+                const respuesta = response.data.respuesta;
+                if (respuesta) {
+                    await client.sendMessage(dev, respuesta);
+                    console.log(`📊 Status diario enviado a ${dev}`);
+                }
+            } catch (err) {
+                console.log(`❌ Error al enviar status a ${dev}: ${err.message}`);
+            }
+        }
+    }
+
+    // Primera ejecución inmediata al arrancar
+    sendDailyStatus();
+
+    // Luego cada 24 hs
+    setInterval(sendDailyStatus, ONE_DAY_MS);
+}
+
 // Manejo de cierre
 function shutdown() {
     console.log('🛑 Señal de salida recibida, cerrando cliente de WhatsApp...');
@@ -95,7 +127,6 @@ function shutdown() {
     process.exit(0);
 }
 
-// Capturar Ctrl+C
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 

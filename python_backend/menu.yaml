@@ -246,3 +246,7 @@ menu_2_2_old:
     ⿣. Menú Anterior
     ⿠. Menú Principal
   back: root
+
+anuncio_de_facebook:
+  message: ¡Hola! Indícanos cómo podemos ayudarte.
+  back: root
