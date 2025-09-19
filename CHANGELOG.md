@@ -129,3 +129,6 @@
 - 19 de septiembre de 2025 16:32 - [1.2.20]
     - Modificado
         - launcher.py: Se ejecutan los procesos sin buffer de consola así se leen los mensajes al instante.
+- 19 de septiembre de 2025 16:38 - [1.2.21]
+    - Eliminado:
+        - app.py: Elimino status_task que había quedado sin uso.

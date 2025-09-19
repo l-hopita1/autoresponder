@@ -176,7 +176,6 @@ async def main():
     except asyncio.CancelledError:
         print("main | Cancelado, iniciando shutdown...")
         backup_task.cancel()
-        status_task.cancel()
         await save_user_data()
         print("👋 Datos guardados. Saliendo...")
 
