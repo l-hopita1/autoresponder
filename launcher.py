@@ -34,7 +34,8 @@ def launch_process(name, cmd, cwd):
         text=True,
         encoding="utf-8",
         errors="replace",
-        bufsize=1
+        bufsize=1,
+        env={**os.environ, "PYTHONUNBUFFERED": "1"}
     )
     threading.Thread(target=stream_reader, args=(name, proc.stdout), daemon=True).start()
     threading.Thread(target=stream_reader, args=(name, proc.stderr), daemon=True).start()
@@ -64,7 +65,7 @@ def main():
     backend_path = os.path.join(base_path, "python_backend", "app.py")
     bot_path = os.path.join(base_path, "nodejs", "bot.js")
 
-    backend_proc = launch_process("PYTHON", ["python", backend_path], os.path.dirname(backend_path))
+    backend_proc = launch_process("PYTHON", ["python", "-u", backend_path], os.path.dirname(backend_path))
     bot_proc = launch_process("NODEJS", ["node", bot_path], os.path.dirname(bot_path))
 
     log("LAUNCHER", "✅ Backend y Bot iniciados. Logs combinados aquí.")

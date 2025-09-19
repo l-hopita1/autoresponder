@@ -125,4 +125,7 @@
         - app.py: se elimina la función status_loop() porque estaba en deshuso.
 - 19 de septiembre de 2025 16:22 - [1.2.19]
     - Modificado:
-        - Se ejecuta backup_loop cada 1 hora.
+        - app.py: Se ejecuta backup_loop cada 1 hora.
+- 19 de septiembre de 2025 16:32 - [1.2.20]
+    - Modificado
+        - launcher.py: Se ejecutan los procesos sin buffer de consola así se leen los mensajes al instante.
