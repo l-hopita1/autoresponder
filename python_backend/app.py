@@ -62,9 +62,9 @@ async def save_user_data():
 async def backup_loop():
     try:
         while True:
-            await asyncio.sleep(300)
             print("backup_loop | Ejecutando...")
             await save_user_data()
+            await asyncio.sleep(3600)
     except asyncio.CancelledError:
         print("backup_loop | Cancelado")
 

@@ -117,9 +117,12 @@
 - 17 de septiembre de 2025 17:17 - [1.2.17]
     - Agregado:
         - Se agrega la versión del commit en el código.
-- 17 de septiembre de 2025 17:31 - [1.2.18]
+- 17 de septiembre de 2025 17:51 - [1.2.18]
     - Agregado:
         - bot.js: Se envía un Status diario cada 24 hs a los desarrolladores.
         - menu.yaml: Se agrega el anuncio de facebook. Para que no lo seleccione como un mensaje de humano.
     - Eliminado:
         - app.py: se elimina la función status_loop() porque estaba en deshuso.
+- 19 de septiembre de 2025 16:22 - [1.2.19]
+    - Modificado:
+        - Se ejecuta backup_loop cada 1 hora.
