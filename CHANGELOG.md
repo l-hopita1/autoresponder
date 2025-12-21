@@ -132,3 +132,9 @@
 - 19 de septiembre de 2025 16:38 - [1.2.21]
     - Eliminado:
         - app.py: Elimino status_task que había quedado sin uso.
+- 21 de diciembre de 2025 17:30 - [1.2.22]
+    - bot.js
+        - Agregado:
+            - Algunos comentarios para separar los módulos.
+            - 'startDailyLoops' función que ejecuta los ciclos diarios del código. Ejecuta el SendStatus y el CRM.
+            - 'sendCRM' envía el historial completo de los clientes al servicio 'http://localhost:5000/crm' cada 2 horas.
