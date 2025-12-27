@@ -98,7 +98,7 @@
         - bot.js Se busca optimizar la memoria en RAM. Se reordenan los filtros
 - 7 de agosto de 2025 20:50 - [1.2.13]
     - Modificación:
-        - Error al calcular el tiempo de demora en 'Status'.
+        - Error al calcular el tiempo de demora en `Status`.
         - Se elimina los datos de usuario al cargarlos. Se cambia por la cantidad de clientes.
 - 7 de agosto de 2025 20:12 - [1.2.14]
     - Modificación:
@@ -136,5 +136,20 @@
     - bot.js
         - Agregado:
             - Algunos comentarios para separar los módulos.
-            - 'startDailyLoops' función que ejecuta los ciclos diarios del código. Ejecuta el SendStatus y el CRM.
-            - 'sendCRM' envía el historial completo de los clientes al servicio 'http://localhost:5000/crm' cada 2 horas.
+            - `startDailyLoops` función que ejecuta los ciclos diarios del código. Ejecuta el SendStatus y el CRM.
+            - `sendCRM` envía el historial completo de los clientes al servicio `http://localhost:5000/crm` cada 2 horas.
+- 27 de diciembre de 2025 17:30 - [2.0.0]
+    - Modularizado del código con el fin de separar el código para un desarrollo más controlado y que sea más robusto a fallas.
+    - Agregado:
+        - `python_backend/worker_class.py`: Clase principal para utilizar como base de otros workers.
+        - `python_backend/chatbot.py`: Clase que contiene al antiguo servicio de autoresponder de `app.py`. Ahora modularizado en una clase.
+        - `python_backend/config.json`: Archivo de configuración para que sea modificado según necesidad. Permite desactivar algún worker.
+        - `python_backend/performance.py`: Clase que ejecuta el antiguo servicio de status de `app.py`. Ahora modularizado en una clase.
+        - `python_backend/code.py`: Inicializa y ejecuta los workers.
+        - `test/`: Carpeta para colocar código que ejecuta el código de a partes.
+    - Modificaciones:
+        - `nodejs/server.py`: Se renombra `bot.js` por `server.js` porque ahora es el código principal de en java script. Se agrega el servicio de CRM.
+        - `crm.py`: Ahora contiene una clase que permite ejecutar modularizadamente funciones de lectura y escritura en spreadsheets de Google.
+        - `launcher.py`: Modificado con los nuevos nombres de código js y python
+        - `RUN.bat`: Se cambió "Server" por "code".
+        - `README.md`: Se pasa de la versión 1.2.22 a la 2.0.0 y se describe mejor el objetivo del proyecto.

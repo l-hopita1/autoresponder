@@ -62,13 +62,13 @@ def main():
     base_path = os.path.dirname(os.path.abspath(__file__))
     log(f"LAUNCHER", f"🚀 Ejecutando versión {APP_VERSION}")
 
-    backend_path = os.path.join(base_path, "python_backend", "app.py")
-    bot_path = os.path.join(base_path, "nodejs", "bot.js")
+    backend_path = os.path.join(base_path, "python_backend", "code.py")
+    bot_path = os.path.join(base_path, "nodejs", "index.js")
 
     backend_proc = launch_process("PYTHON", ["python", "-u", backend_path], os.path.dirname(backend_path))
     bot_proc = launch_process("NODEJS", ["node", bot_path], os.path.dirname(bot_path))
 
-    log("LAUNCHER", "✅ Backend y Bot iniciados. Logs combinados aquí.")
+    log("LAUNCHER", "✅ Server iniciado! Logs combinados acá.")
 
     try:
         # Espera que ambos procesos terminen de forma natural
