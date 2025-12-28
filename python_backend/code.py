@@ -2,9 +2,9 @@
 import asyncio, logging, sys, io, os,json
 from threading import Thread
 # Import class:
-from .chatbot import chatBotWorker
-from .crm import crmWorker
-from .performance import performanceWorker
+from chatbot import chatBotWorker
+from crm import crmWorker
+from performance import performanceWorker
 # Import others:
 from flask import Flask, request, jsonify
 
@@ -101,8 +101,9 @@ if config_performance.get('enabled'):
 if config_crm.get('enabled'):
     @app.route('/crm', methods=['POST'])
     def crm():
-        data = request.get_json(force=True)
-        return jsonify(crm_worker.handle_crm(data))
+        payload = request.get_json(force=True)
+        crm_worker.handle_crm(payload)
+        return jsonify({"status": "ok"})
 
 SERVER_HOST = config_server.get("host", "0.0.0.0")
 SERVER_PORT = int(config_server.get("port", 5000))
@@ -121,13 +122,12 @@ def run_flask():
 # MAIN ASYNC
 # ─────────────────────────────────────────────
 async def main():
-    logger.info("⚙️ Iniciando workers async")
+    logger.info('code.py | main | ⚙️ Iniciando workers async')
 
-    tasks = [
-        asyncio.create_task(chatbot_worker.run(), name="chatbot"),
-        asyncio.create_task(crm_worker.run(), name="crm"),
-        asyncio.create_task(performance_worker.run(), name="performance"),
-    ]
+    tasks = []
+    tasks.append(asyncio.create_task(chatbot_worker.run(), name="chatbot"))
+    #tasks.append(asyncio.create_task(crm_worker.run(), name="crm"))
+    #tasks.append(asyncio.create_task(performance_worker.run(), name="performance"))
 
     # Flask en thread separado
     Thread(target=run_flask, daemon=True).start()
@@ -135,11 +135,12 @@ async def main():
     try:
         await asyncio.gather(*tasks)
     except asyncio.CancelledError:
-        logger.warning("⛔ Cancelación recibida, apagando workers...")
+        logger.warning("code.py | main | ⛔ Cancelación recibida, apagando workers...")
     finally:
         for t in tasks:
-            t.cancel()
-        logger.info("👋 Server finalizado correctamente")
+            if not t.done():
+                t.cancel()
+        logger.info("code.py | main | 👋 Server finalizado correctamente")
 
 # ─────────────────────────────────────────────
 # ENTRYPOINT
@@ -148,4 +149,4 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        logger.error("🛑 KeyboardInterrupt — apagando servidor")
+        logger.error("code.py | main | 🛑 KeyboardInterrupt — apagando servidor")

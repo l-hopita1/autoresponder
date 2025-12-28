@@ -1,8 +1,9 @@
 # Import modules:
-import os, yaml, json, asyncio, time, logging
+import os, yaml, json, asyncio, time
 # Import class:
-from .worker_class import workerClass
 from logging import Logger
+from worker_class import workerClass
+
 
 
 class chatBotWorker(workerClass):
@@ -39,18 +40,20 @@ class chatBotWorker(workerClass):
             try:
                 with open(self._user_data_path, 'r', encoding='utf-8') as f:
                     self._users_data = dict(json.load(f))
-                self.logger.info(f'{self.__class__.__name__} | init | ✅ {len(self._users_data)} usuarios cargados correctamente.')
+                self.logger.debug(f'{self.__class__.__name__} | init | ✅ {len(self._users_data)} usuarios cargados correctamente.')
             except Exception as e:
                 self.logger.error(f'{self.__class__.__name__} | init | ❌ Error al cargar datos-> {e.__class__.__name__}: {e}')
+
+        self.logger.info(f'{self.__class__.__name__} | init | ✅ Inicializado correctamente.')
 
     async def run(self):
         try:
             while True:
-                self.logger.info(f'{self.__class__.__name__} | backup_loop | Ejecutando...')
+                self.logger.info(f'{self.__class__.__name__} | run | Ejecutando...')
                 await self.save_user_data()
                 await asyncio.sleep(3600)
         except asyncio.CancelledError:
-            self.logger.info(f'{self.__class__.__name__} | backup_loop | Cancelado')
+            self.logger.info(f'{self.__class__.__name__} | run | Cancelado')
 
     async def save_user_data(self):
         async with self._save_lock:

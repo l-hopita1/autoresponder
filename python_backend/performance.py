@@ -1,9 +1,9 @@
 # Import Modules:
 import psutil, time, os
 # Import Class:
-from .worker_class import workerClass
-from .chatbot import chatBotWorker
-from .crm import crmWorker
+from worker_class import workerClass
+from chatbot import chatBotWorker
+from crm import crmWorker
 from logging import Logger
 
 class performanceWorker(workerClass):
@@ -25,6 +25,8 @@ class performanceWorker(workerClass):
         if os.path.exists(version_file):
             with open(version_file, "r", encoding="utf-8") as f:
                 self._git_version_str = f.read().strip()
+        
+        self.logger.info(f'{self.__class__.__name__} | init | ✅ Inicializado correctamente.')
         
     def build_status(self, data:dict)-> dict:
         contact_name = data.get('contact_name','').strip()

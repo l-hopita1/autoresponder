@@ -13,7 +13,7 @@ class workerClass():
         self._config = config
 
     async def run(self):
-        raise NotImplementedError("run() debe implementarse en el worker hijo")
+        raise NotImplementedError(f'{__class__.__name__} | run | Debe implementarse en el worker hijo')
     
     def current_time_str(self):
         return f"[{datetime.now():%d/%m/%Y %H:%M:%S}]"

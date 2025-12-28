@@ -1,12 +1,14 @@
 # Import modules:
 import gspread
 # Import Class
-from logging import Logger
-from .worker_class import workerClass
-from oauth2client.service_account import ServiceAccountCredentials
 from pathlib import Path
+from logging import Logger
+from datetime import datetime
+from worker_class import workerClass
+from oauth2client.service_account import ServiceAccountCredentials
 
 BASE_DIR = Path(__file__).resolve().parent
+
 
 
 class crmWorker(workerClass):
@@ -19,8 +21,6 @@ class crmWorker(workerClass):
     def __init__(self, logger: Logger):
         super().__init__(logger)
         self._client                = None
-        self._spreadsheet_url       = None
-        self._worksheet_name        = None
         self._credentials_filename  = None
 
     def init(self, config: dict):
@@ -45,41 +45,83 @@ class crmWorker(workerClass):
             )
         self._client = gspread.authorize(credentials)
         self.logger.debug(f'{self.__class__.__name__} | init | Credenciales de Google verificadas')
+        self.logger.info(f'{self.__class__.__name__} | init | ✅ Inicializado correctamente.')
 
-    def handle_crm(self):
-        self._spreadsheet_url = self._config.get('spreadsheet_url')
-        self._worksheet_name = self._config.get('worksheet_name','crm')
-
-        # Obtengo los datos de la hoja de cálculo
-        data = self._get_worksheet_data(self._spreadsheet_url, self._worksheet_name)
-        if not data:
-            self.logger.warning("La hoja está vacía")
+    def handle_crm(self, payload: dict):
+        # Check inputs:
+        chats = payload.get("chats", [])
+        if not chats:
+            self.logger.warning(f'{self.__class__.__name__} | handle_crm | No se recibieron chats')
             return
-        else:
-            self.logger.debug(f'{self.__class__.__name__} | handle_crm | Datos de hoja de cálculo obtenidos exitosamente')
 
-        print("Datos originales:")
-        for fila in data:
-            print(fila)
+        # Get configuration:
+        keywords = self._config.get("keywords", [])
+        dry_run = self._config.get("dry_run", False)
+        spreadsheet_url = self._config.get("spreadsheet_url")
+        worksheet_name = self._config.get("worksheet_name", "crm")
 
-        # --- Procesar datos ---
-        header = data[0]
-        rows = data[1:]
+        rows = []
+        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        idx_number = header.index("Número") if "Número" in header else None
-        header.append("Número ARG")
+        # 
+        for chat in chats:
+            if not self._filter_chat(chat):
+                continue
 
-        for row in rows:
-            if idx_number is not None and row[idx_number].isdigit():
-                row.append("+54" + row[idx_number])
-            else:
-                row.append("")
+            stats = self._analyze_chat(chat, keywords)
+
+            row = [
+                stats["chat_id"],
+                stats["name"],
+                stats["my_messages"],
+                stats["client_messages"],
+                stats["last_my_message"],
+                stats["last_client_message"],
+            ]
+
+            # keywords (míos / cliente)
+            for k in keywords:
+                row.append(stats["my_keywords"][k])
+                row.append(stats["client_keywords"][k])
+
+            row.append(now_str)
+            rows.append(row)
+
+        if not rows:
+            self.logger.warning(f'{self.__class__.__name__} | handle_crm | No hay filas para escribir')
+            return
+
+        # Header dinámico
+        header = [
+            "chat_id",
+            "name",
+            "my_messages",
+            "client_messages",
+            "last_my_message",
+            "last_client_message",
+        ]
+
+        for k in keywords:
+            header.append(f"kw_{k}_my")
+            header.append(f"kw_{k}_client")
+
+        header.append("last_crm_update")
+
+        data = [header] + rows
+
+        if dry_run:
+            self.logger.info(f'{self.__class__.__name__} | handle_crm | DRY RUN | {len(rows)} filas procesadas')
+            return
 
         self._set_worksheet_data(
-            self._spreadsheet_url,
-            self._worksheet_name,
-            [header] + rows
+            spreadsheet_url,
+            worksheet_name,
+            data
         )
+
+        self.logger.info(f'{self.__class__.__name__} | handle_crm | CRM actualizado correctamente ({len(rows)} chats)')
+
+    # Private fuctions:
 
     def _get_worksheet_data(self, url: str, worksheet_name: str)->list[list]:
         # Abrimos el Google Sheet por URL        
@@ -111,3 +153,43 @@ class crmWorker(workerClass):
                 f'Hoja "{worksheet_name}" no encontrada. Disponibles: {titles}'
             )
         return spreadsheet.worksheet(worksheet_name)
+    
+    def _filter_chat(self, chat):
+        if not self._config.get("include_groups", False) and chat["isGroup"]:
+            return False
+        if not self._config.get("include_readonly", False) and chat["isReadOnly"]:
+            return False
+        return True
+
+    def _analyze_chat(self, chat, keywords):
+        """
+        """
+        # Defino las estadísticas a utilizar:
+        stats = {
+            "chat_id": chat["chatId"],
+            "name": chat["name"],
+            "my_messages": 0, # Contador de mensajes míos.
+            "client_messages": 0, # Contador de mensajes del cliente.
+            "last_my_message": None, # Tiempo de mi último mensaje.
+            "last_client_message": None, # Tiempo del último mensaje del cliente.
+            "my_keywords": {k: 0 for k in keywords}, # Contadores de palabras clave míos.
+            "client_keywords": {k: 0 for k in keywords}, # Contadores de palabras clave del cliente.
+        }
+
+        # Actualizo los tiempos y los contadores.
+        for m in chat["messages"]:
+            text = (m["body"] or "").lower()
+            ts = m["timestamp"]
+
+            if m["fromMe"]:
+                stats["my_messages"] += 1
+                stats["last_my_message"] = max(stats["last_my_message"] or 0, ts)
+                for k in keywords:
+                    stats["my_keywords"][k] += text.count(k)
+            else:
+                stats["client_messages"] += 1
+                stats["last_client_message"] = max(stats["last_client_message"] or 0, ts)
+                for k in keywords:
+                    stats["client_keywords"][k] += text.count(k)
+
+        return stats

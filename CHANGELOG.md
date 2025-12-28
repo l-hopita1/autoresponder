@@ -156,7 +156,7 @@
 - 28 de diciembre de 2025 13:38 - [2.0.1]
     - Agregado:
         - `python_backend/code.py`: Se mutean los loggeos de los servicios de Google.
-        - `python_backend/config.json`: Se mutean los loggeos de los servicios de Google.
+        - `python_backend/config.json`: Se agrega "credentials_path" dentro de la configuración de "CRM" para configurar el nombre del archivo.
         - `python_backend/crm.py`:
             - Se comprueba la existencia del archivo de credenciales
             - Se utiliza una ruta absoluta para poder ejecutar desde otra carpeta.
@@ -166,3 +166,22 @@
             - Se mutean los loggeos de los servicios de Google.
             - Se coloca en la configuración "credentials_path" y se modifica el nombre de la hoja de Google spreadsheet de "crm" a "Base de datos automática".
             - Se colocan más comentarios.
+- 28 de diciembre de 2025 - [2.1.0]
+    - `README.md`: Se agrega cómo deben ser creados los archivos que faltan en el repositorio por tema de privacidad.
+    - `nodejs/index.js`:
+        - Se desactiva el almacenamiento de datos cache.
+        - Se agrega un dummy DEVELOPERS en caso de no encontrar el archivo "secrets.json"
+        - Se elimina los filtros previo al envío de mensajes al CRM. Ahora se envía todo el historial de 500 mensajes por número al servicio de CRM.
+    - `python_backend/chatbot.py`: Corrección de loggeos.
+    - `python_backend/code.py`:
+        - Utilización de rutas absolutas.
+        - Se comentan las funciones run que no se utilizan.
+        - Corrección de loggeos.
+    - `python_backend/config.json`: Dentro de CRM, se agregan campos para configurar los filtros y las palabras claves.
+    - `python_backend/crm.py`:
+        - **handle_crm** ahora es un MVP que procesa el historial de los mensajes y genera una estadística que la guarda en el spreadsheet indicado de Google.
+        - Agregado de loggeos al iniciar el worker.
+    - `python_backend/performance.py`:
+        - Agregado de loggeos al iniciar el worker.
+    - `python_backend/worker_class.py`:
+        - Corrección de loggeo.

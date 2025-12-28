@@ -98,12 +98,6 @@ Ver [`CHANGELOG`](CHANGELOG.md).
 
 ## 🔮 Roadmap
 
-### 🚧 2.1.X
-- Integración con Google Sheets
-  - Número de celular
-  - Cantidad de interacciones
-  - Estado del menú
-  - Última fecha de contacto
 ### 🚧 2.2.X
 - Seguimiento automático por inactividad
 - Reintentos configurables
@@ -121,5 +115,71 @@ Ver [`CHANGELOG`](CHANGELOG.md).
 
 ---
 
+## 🔐 Archivos ignorados por privacidad (`.gitignore`)
+
+Algunos archivos no se incluyen en el repositorio porque contienen **datos sensibles**.  
+Deben ser creados manualmente para que el sistema funcione correctamente.
+
+---
+
+### `nodejs/secrets.json`
+
+Define los números de WhatsApp con permisos especiales (admins/desarrolladores).
+
+```json
+{
+  "developers": [
+    "5491112345678@c.us"
+  ]
+}
+```
+
+- Formato: `<codigo_pais><numero>@c.us`
+- Usado para habilitar comandos y funciones administrativas.
+
+---
+
+### `python_backend/credentials.json`
+
+Credenciales de una **Service Account de Google** para integración con Google Sheets.
+
+```json
+{
+  "type": "service_account",
+  "project_id": "...",
+  "private_key": "...",
+  "client_email": "..."
+}
+```
+
+**Cómo obtenerlo:**
+- Google Cloud Console → APIs & Services → Credentials
+- Crear Service Account
+- Generar y descargar clave JSON
+
+⚠️ Nunca subir este archivo a Git.
+
+---
+
+### `python_backend/users_data.json`
+
+Estados y permisos de usuarios de WhatsApp.
+
+```json
+{
+  "5491112345678@c.us": {
+    "CHAT_BOT_LEVEL": "root"
+  }
+}
+```
+
+- Clave: ID de WhatsApp
+- `CHAT_BOT_LEVEL`: nivel de acceso (`root`, `admin`, etc.)
+
+---
+
+Todos estos archivos están en `.gitignore` y son específicos de cada instalación.
+
+---
 ## 🙌 Agradecimientos
 - [whatsapp-web.js](https://wwebjs.dev/)

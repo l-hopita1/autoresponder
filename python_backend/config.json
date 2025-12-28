@@ -13,7 +13,20 @@
         "enabled": true,
         "spreadsheet_url": "https://docs.google.com/spreadsheets/d/12E24sqkNvhLOa9_-_DPiceVm9wdFni6Ql_SMQwcTgqE/edit?gid=0#gid=0",
         "worksheet_name": "crm",
-        "credentials_path":"credentials.json"
+        "credentials_path":"credentials.json",
+        "include_my_contacts": false,
+        "include_groups": false,
+        "include_communities": false,
+        "include_readonly": false,
+        "keywords": [
+            "panel solar",
+            "batería",
+            "inversor",
+            "precio",
+            "instalación"
+        ],
+        "dry_run": true,
+        "max_messages_per_chat": 500
     },
     "Performance": {
         "enabled": true
