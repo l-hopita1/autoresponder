@@ -166,7 +166,7 @@
             - Se mutean los loggeos de los servicios de Google.
             - Se coloca en la configuración "credentials_path" y se modifica el nombre de la hoja de Google spreadsheet de "crm" a "Base de datos automática".
             - Se colocan más comentarios.
-- 28 de diciembre de 2025 - [2.1.0]
+- 28 de diciembre de 2025 18:22 - [2.1.0]
     - `README.md`: Se agrega cómo deben ser creados los archivos que faltan en el repositorio por tema de privacidad.
     - `nodejs/index.js`:
         - Se desactiva el almacenamiento de datos cache.
@@ -185,3 +185,8 @@
         - Agregado de loggeos al iniciar el worker.
     - `python_backend/worker_class.py`:
         - Corrección de loggeo.
+- 28 de diciembre de 2025 18:35 - [2.1.1]
+    Nuevo test para probar el funcionamiento del node y wwebjs.
+    - `test/TEST_NODE.bat`
+    - `test/test_node.py`
+    - `test/test_node.js`
