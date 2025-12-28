@@ -1,3 +1,5 @@
 flask
 pyyaml
 psutil
+gspread
+oauth2client

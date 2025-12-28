@@ -4,11 +4,12 @@ import gspread
 from logging import Logger
 from .worker_class import workerClass
 from oauth2client.service_account import ServiceAccountCredentials
+from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent
 
 
 class crmWorker(workerClass):
-    _credentials_filename = "credentials.json"
     _scopes = [
             "https://spreadsheets.google.com/feeds",
             "https://www.googleapis.com/auth/spreadsheets",
@@ -17,17 +18,29 @@ class crmWorker(workerClass):
 
     def __init__(self, logger: Logger):
         super().__init__(logger)
-        self._client = None
-        self._spreadsheet_url = None
-        self._worksheet_name = None
+        self._client                = None
+        self._spreadsheet_url       = None
+        self._worksheet_name        = None
+        self._credentials_filename  = None
 
     def init(self, config: dict):
         # Guardo la configuración
         self._config = config
-        
+
         # Autenticación
+        credentials_path = config.get("credentials_path")
+        if not credentials_path:
+            raise ValueError("crmWorker | init | credentials_path no definido en config")
+        credentials_path = Path(credentials_path)
+        if not credentials_path.is_absolute():
+            credentials_path = BASE_DIR / credentials_path
+        self._credentials_filename = credentials_path
+        if not self._credentials_filename.exists():
+            raise FileNotFoundError(
+                f"Archivo de credenciales no encontrado: {self._credentials_filename}"
+            )
         credentials = ServiceAccountCredentials.from_json_keyfile_name(
-            self._credentials_filename,
+            str(self._credentials_filename),
             self._scopes
             )
         self._client = gspread.authorize(credentials)
@@ -71,12 +84,10 @@ class crmWorker(workerClass):
     def _get_worksheet_data(self, url: str, worksheet_name: str)->list[list]:
         # Abrimos el Google Sheet por URL        
         spreadsheet = self._client.open_by_url(url)
-        self.logger.debug(f'{self.__class__.__name__} | init | Google spreadsheet obtenida exitosamente')
 
         # Abrimos la hoja (pestaña) por título
-        self.logger.debug(f'{self.__class__.__name__} | init | lista de hojas disponibles: {spreadsheet.worksheets()}')
-        sheet = spreadsheet.worksheet(worksheet_name)
-        self.logger.debug(f'{self.__class__.__name__} | init | Hoja de cálculo "{worksheet_name}"obtenida exitosamente')
+        sheet = self._get_worksheet_from_spreadsheet(worksheet_name,spreadsheet)
+        self.logger.debug(f'{self.__class__.__name__} | _get_worksheet_data | Hoja de cálculo "{worksheet_name}" obtenida exitosamente')
 
         # Devolvemos los datos
         return sheet.get_all_values()
@@ -85,13 +96,18 @@ class crmWorker(workerClass):
     def _set_worksheet_data(self, url: str, worksheet_name: str, data: list[list]):
         # Abrimos el Google Sheet por URL        
         spreadsheet = self._client.open_by_url(url)
-        self.logger.debug(f'{self.__class__.__name__} | init | Google spreadsheet obtenida exitosamente')
 
         # Abrimos la hoja (pestaña) por título
-        self.logger.debug(f'{self.__class__.__name__} | init | lista de hojas disponibles: {spreadsheet.worksheets()}')
-        sheet = spreadsheet.worksheet(worksheet_name)
-        self.logger.debug(f'{self.__class__.__name__} | init | Hoja de cálculo "{worksheet_name}"obtenida exitosamente')
+        sheet = self._get_worksheet_from_spreadsheet(worksheet_name,spreadsheet)
         
         # Reescribo los datos:
         sheet.clear()
         sheet.update('A1', data)
+    
+    def _get_worksheet_from_spreadsheet(self, worksheet_name: str,spreadsheet:str):
+        titles = [ws.title for ws in spreadsheet.worksheets()]
+        if worksheet_name not in titles:
+            raise ValueError(
+                f'Hoja "{worksheet_name}" no encontrada. Disponibles: {titles}'
+            )
+        return spreadsheet.worksheet(worksheet_name)

@@ -12,7 +12,8 @@
     "CRM": {
         "enabled": true,
         "spreadsheet_url": "https://docs.google.com/spreadsheets/d/12E24sqkNvhLOa9_-_DPiceVm9wdFni6Ql_SMQwcTgqE/edit?gid=0#gid=0",
-        "worksheet_name": "crm"
+        "worksheet_name": "crm",
+        "credentials_path":"credentials.json"
     },
     "Performance": {
         "enabled": true

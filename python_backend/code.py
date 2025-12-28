@@ -53,6 +53,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger("SERVER")
 
+# Mutear loggeos de servicios en 2° plano:
+logging.getLogger("urllib3").setLevel(logging.WARNING)
+logging.getLogger("urllib3.connectionpool").setLevel(logging.WARNING)
+logging.getLogger("urllib3.util.retry").setLevel(logging.WARNING)
+logging.getLogger("google").setLevel(logging.WARNING)
+logging.getLogger("oauth2client").setLevel(logging.WARNING)
+
 # ─────────────────────────────────────────────
 # WORKERS
 # ─────────────────────────────────────────────

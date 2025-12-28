@@ -138,7 +138,7 @@
             - Algunos comentarios para separar los módulos.
             - `startDailyLoops` función que ejecuta los ciclos diarios del código. Ejecuta el SendStatus y el CRM.
             - `sendCRM` envía el historial completo de los clientes al servicio `http://localhost:5000/crm` cada 2 horas.
-- 27 de diciembre de 2025 17:30 - [2.0.0]
+- 27 de diciembre de 2025 18:30 - [2.0.0]
     - Modularizado del código con el fin de separar el código para un desarrollo más controlado y que sea más robusto a fallas.
     - Agregado:
         - `python_backend/worker_class.py`: Clase principal para utilizar como base de otros workers.
@@ -153,3 +153,16 @@
         - `launcher.py`: Modificado con los nuevos nombres de código js y python
         - `RUN.bat`: Se cambió "Server" por "code".
         - `README.md`: Se pasa de la versión 1.2.22 a la 2.0.0 y se describe mejor el objetivo del proyecto.
+- 28 de diciembre de 2025 13:38 - [2.0.1]
+    - Agregado:
+        - `python_backend/code.py`: Se mutean los loggeos de los servicios de Google.
+        - `python_backend/config.json`: Se mutean los loggeos de los servicios de Google.
+        - `python_backend/crm.py`:
+            - Se comprueba la existencia del archivo de credenciales
+            - Se utiliza una ruta absoluta para poder ejecutar desde otra carpeta.
+            - _get_worksheet_from_spreadsheet: función para abrir la hoja de un spreadsheet.
+        - `python_backend/requirements.txt`: Actualizado para las dependencias del crm.
+        - `test/test_crm.py`:
+            - Se mutean los loggeos de los servicios de Google.
+            - Se coloca en la configuración "credentials_path" y se modifica el nombre de la hoja de Google spreadsheet de "crm" a "Base de datos automática".
+            - Se colocan más comentarios.
