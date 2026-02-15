@@ -58,3 +58,9 @@ sheet.clear()
 sheet.update('A1', new_data)
 
 print("Datos actualizados en la hoja.")
+
+class CRM():
+    """Customer Relationship Management"""
+
+    async def run(self):
+        pass

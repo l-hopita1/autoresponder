@@ -132,3 +132,6 @@
 - 19 de septiembre de 2025 16:38 - [1.2.21]
     - Eliminado:
         - app.py: Elimino status_task que había quedado sin uso.
+- 26 de febrero de 2026 17:52 - [2.0.0] crm
+    - app.py: Add crm service.
+    - crm.py: Add crm service.

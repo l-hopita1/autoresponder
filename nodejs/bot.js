@@ -93,6 +93,7 @@ client.on('message', async msg => {
 // --- 🔄 Loop diario de status ---
 function startDailyStatusLoop() {
     const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+    const TWO_HOUR_MS = 2 * 60 * 60 * 1000;
 
     async function sendDailyStatus() {
         for (const dev of DEVELOPERS) {
@@ -112,11 +113,59 @@ function startDailyStatusLoop() {
         }
     }
 
+    async function sendCRM() {
+        try {
+            const chats = await client.getChats();
+            const crmChats = [];
+
+            for (const chat of chats) {
+
+                // Evitar estados, grupos y chats de whatsapp.
+                if (chat.id._serialized.includes('status') || chat.isReadOnly || chat.isGroup) continue;
+
+                // Obtener TODO el historial posible del chat
+                const messages = await chat.fetchMessages({ limit: 5000 }); // máximo permitido por WhatsApp-Web.js
+
+                const formattedMessages = messages.map(m => ({
+                    id: m.id._serialized,
+                    fromMe: m.fromMe,
+                    author: m.author || null,
+                    timestamp: m.timestamp,
+                    body: m.body || "",
+                    type: m.type
+                }));
+
+                crmChats.push({
+                    chatId: chat.id._serialized,
+                    name: chat.name || chat.formattedTitle || "Sin nombre",
+                    isGroup: chat.isGroup,
+                    messages: formattedMessages
+                });
+            }
+            // Enviar TODO al CRM
+            const response = await axios.post("http://localhost:5000/crm", {
+                chats: crmChats
+            });
+
+            if (response.data.success) {
+                console.log(`📊 CRM actualizado con ${crmChats.length} chats (historial completo enviado).`);
+            } else {
+                console.log("⚠️ CRM respondió sin éxito.");
+            }
+
+        } catch (err) {
+            console.log(`❌ Error al enviar CRM: ${err.message}`);
+        }
+    }
+
+
     // Primera ejecución inmediata al arrancar
     sendDailyStatus();
+    sendCRM();
 
-    // Luego cada 24 hs
+    // Ejecución periódica
     setInterval(sendDailyStatus, ONE_DAY_MS);
+    setInterval(sendCRM, TWO_HOUR_MS);
 }
 
 // Manejo de cierre

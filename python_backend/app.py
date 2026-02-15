@@ -2,6 +2,7 @@ import os, yaml, json, asyncio, time, psutil, sys, io
 from flask import Flask, request, jsonify
 from datetime import datetime
 from threading import Thread
+from .crm import CRM
 
 app = Flask(__name__)
 
@@ -160,10 +161,20 @@ def responder():
 
     return jsonify({'respuesta': answer})
 
+@app.route('/crm', methods=['POST'])
+def crm():
+    data = request.get_json(force=True)
+    chats = data.get('chats').strip()
+
+    for chat in chats:
+        pass
+    
+    return jsonify({'success': True})
+
 # --- Main ---
 async def main():
-    # Lanzar loops de backup
     backup_task = asyncio.create_task(backup_loop())
+    crm_task = asyncio.create_task(CRM.run())
 
     # Lanzar Flask en thread separado
     def run_flask():
