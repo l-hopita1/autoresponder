@@ -25,7 +25,6 @@
             "precio",
             "instalación"
         ],
-        "dry_run": false,
         "max_messages_per_chat": 500
     },
     "Performance": {

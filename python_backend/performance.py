@@ -42,20 +42,46 @@ class performanceWorker(workerClass):
         total_mem_mb  = sys_mem.total / (1024 * 1024)
         sys_cpu_percent = psutil.cpu_percent(interval=0.5)
 
-        answer = f"""*{contact_name}*:
-✅ *Datos del Backend:*
-- Versión: {self._git_version_str}
-- Fecha de inicio: {self._initialization_time}
-- Última respuesta automática: {self._chatbot_worker.last_answer}
-- Contador de clientes: {self._chatbot_worker.user_counter}
-- Tiempo de esta respuesta: {(time.time()-msg_timestamp):.1f} segundos
+        # System Uptime
+        boot_time = psutil.boot_time()
+        uptime_seconds = time.time() - boot_time
+        uptime_string = time.strftime("%H:%M:%S", time.gmtime(uptime_seconds))
 
-📊 *Especificaciones del Backend*
-- Uso de RAM (backend): {mem_mb:.1f} MB de {total_mem_mb:.0f} MB
-- Uso de CPU (backend): {cpu_percent:.1f} %
+        # Network Stats (since boot)
+        net_io = psutil.net_io_counters()    
+        sent_mb = net_io.bytes_sent / (1024 * 1024)
+        recv_mb = net_io.bytes_recv / (1024 * 1024)
 
-💻 *Especificaciones del Sistema*
-- Uso de RAM: {sys_mem_percent:.1f} %
-- Uso de CPU: {sys_cpu_percent:.1f} %
+        # Disk Usage (C:)
+        try:
+            disk_usage = psutil.disk_usage('C:\\')
+            disk_total_gb = disk_usage.total / (1024**3)
+            disk_free_gb = disk_usage.free / (1024**3)
+            disk_percent = disk_usage.percent
+        except:
+             disk_total_gb = 0
+             disk_free_gb = 0
+             disk_percent = 0
+
+        answer = f"""*Estado del Sistema* 🤖
+📅 *Fecha:* {time.strftime('%d/%m/%Y %H:%M:%S')}
+⏱ *Uptime Sistema:* {uptime_string}
+⏱ *Uptime Bot:* {self._initialization_time}
+🔢 *Versión:* {self._git_version_str}
+
+📊 *Estadísticas de Autoresponder*
+----------------------------------
+💬 *Última respuesta:* {self._chatbot_worker.last_answer}
+👥 *Clientes interactuando:* {self._chatbot_worker.user_counter}
+⚡ *Tiempo de respuesta:* {(time.time()-msg_timestamp):.2f}s
+🧠 *RAM Bot:* {mem_mb:.1f} MB
+⚙️ *CPU Bot:* {cpu_percent:.1f}%
+
+💻 *Recursos del Servidor*
+----------------------------------
+🧠 *RAM Total:* {total_mem_mb:.0f} MB (Uso: {sys_mem_percent:.1f}%)
+⚙️ *CPU Total:* {sys_cpu_percent:.1f}%
+💾 *Disco (C:):* {disk_free_gb:.1f} GB libres de {disk_total_gb:.1f} GB ({disk_percent}%)
+🌐 *Red:* ⬆️ {sent_mb:.0f} MB | ⬇️ {recv_mb:.0f} MB
 """
         return {'respuesta': answer}

@@ -196,3 +196,13 @@
     - `nodejs/index.js`: Se agrega manejo de errores (try/catch) en el loop del CRM para evitar interrupciones por chats corruptos.
     - `config.json`: Se deshabilita el dry_run de CRM.
     - `crm.py`: Se obtienen los parámetros mediante un get de 'isGroup' y 'isReadOnly' de los mensajes entrantes para evitar errores.
+- 16 de febrero de 2026 14:04 - [2.1.3]
+    - `python_backend/performance.py`:
+        - Se agregan métricas de **sistema**: Uptime del PC, Uptime del Bot, Versión de Git.
+        - Se agregan métricas de **recursos**: Uso de Disco (C:), Tráfico de Red (Subida/Bajada), RAM y CPU.
+        - Se mejora el formato visual del mensaje de respuesta.
+    - `nodejs/index.js`:
+        - Soporte para enviar el **Status Diario** a un grupo de WhatsApp específico (configurado en `secrets.json`).
+        - Permite ejecutar el comando "Status" desde dicho grupo.
+        - Loggeo auxiliar para obtener el ID de los grupos fácilmente.
+    - `nodejs/secrets.json`: Se agrega campo `status_target_group_id`.

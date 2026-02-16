@@ -24,12 +24,15 @@ let DEVELOPERS = [];
 try {
     const data = JSON.parse(fs.readFileSync('./secrets.json', 'utf8'));
     DEVELOPERS = data.developers || [];
+    STATUS_GROUP_ID = data.status_target_group_id || "";
     console.log('✅ Lista de desarrolladores actualizada.');
+    if (STATUS_GROUP_ID) console.log(`✅ Grupo de status configurado: ${STATUS_GROUP_ID}`);
 } catch (err) {
     console.log(`❌ No se pudo cargar secrets.json: ${err.message}`);
     DEVELOPERS = [
         "X@c.us",
     ]
+    STATUS_GROUP_ID = "";
 }
 
 client.on('qr', qr => {
@@ -48,17 +51,24 @@ client.on('message', async msg => {
     try {
         // Filtros de mensajes
         if (
-            msg.from.includes('status') ||
-            msg.from.includes('@g.us') ||
-            !msg.body || msg.from === msg.body || // Mensajes de estados de chat
-            !msg.timestamp || msg.timestamp < 1600000000 // Mensajes viejos
+            (msg.from.includes('status') ||
+                msg.from.includes('@g.us') ||
+                !msg.body || msg.from === msg.body || // Mensajes de estados de chat
+                !msg.timestamp || msg.timestamp < 1600000000) && // Mensajes viejos 
+            msg.from !== STATUS_GROUP_ID // Excepción: permitir mensajes del grupo de status
         ) return;
+
         const messageDate = new Date(msg.timestamp * 1000);
         const hoursDiff = (Date.now() - messageDate.getTime()) / 36e5;
         if (hoursDiff > 24) return;
         const contact = await msg.getContact();
-        if (contact.isMyContact) {
-            if (DEVELOPERS.includes(msg.from) && msg.body.includes('Status')) {
+
+        // 1. Mensajes de Desarrolladores (DM o Grupo Configurado)
+        if (contact.isMyContact || msg.from === STATUS_GROUP_ID) {
+            const isDev = DEVELOPERS.includes(msg.from);
+            const isStatusGroup = msg.from === STATUS_GROUP_ID;
+
+            if ((isDev || isStatusGroup) && msg.body.toLowerCase().includes('status')) {
                 console.log(`🤖 ${contact.name || msg.from} preguntó por el estado del programa.`);
                 const response = await axios.post('http://localhost:5000/status', {
                     contact_name: contact.name || 'Usuario',
@@ -70,7 +80,10 @@ client.on('message', async msg => {
                     console.log(`🤖 Se le respondió a ${contact.name || msg.from}.`);
                 }
                 return;
-            } else {
+            } else if (isStatusGroup) {
+                // Si es el grupo de status pero no es el comando status, ignoramos para no intentar responder como chatbot
+                return;
+            } else if (contact.isMyContact && !isDev) {
                 console.log(`🛡️ Filtrado: ${contact.name || msg.from} es un contacto guardado`);
                 return;
             }
@@ -114,6 +127,25 @@ function startDailyLoops() {
 
 // 📊 DailyStatus — Envía datos instantaneos del programa.
 async function sendDailyStatus() {
+    // Si hay un grupo definido, enviar solo ahí
+    if (STATUS_GROUP_ID) {
+        try {
+            const response = await axios.post('http://localhost:5000/status', {
+                contact_name: 'Reporte automático',
+                msg_timestamp: Date.now() / 1000
+            });
+            const respuesta = response.data.respuesta;
+            if (respuesta) {
+                await client.sendMessage(STATUS_GROUP_ID, respuesta);
+                console.log(`📊 Status diario enviado al grupo ${STATUS_GROUP_ID}`);
+            }
+        } catch (err) {
+            console.log(`❌ Error al enviar status al grupo: ${err.message}`);
+        }
+        return;
+    }
+
+    // Si no, comportamiento legacy (enviar a c/u)
     for (const dev of DEVELOPERS) {
         try {
             const response = await axios.post('http://localhost:5000/status', {
@@ -155,7 +187,7 @@ async function sendCRM() {
                 console.log(`❌ Error al procesar chat ${chat.name || 'Sin nombre'} (${chat.id._serialized}): ${error.message} | Archivado: ${chat.isReadOnly}`);
             }
             // Delay to prevent detached frame / overload
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise(resolve => setTimeout(resolve, 250));
         }
 
         await axios.post('http://localhost:5000/crm', { chats: crmChats });

@@ -56,7 +56,6 @@ class crmWorker(workerClass):
 
         # Get configuration:
         keywords = self._config.get("keywords", [])
-        dry_run = self._config.get("dry_run", False)
         spreadsheet_url = self._config.get("spreadsheet_url")
         worksheet_name = self._config.get("worksheet_name", "crm")
 
@@ -108,10 +107,6 @@ class crmWorker(workerClass):
         header.append("last_crm_update")
 
         data = [header] + rows
-
-        if dry_run:
-            self.logger.info(f'{self.__class__.__name__} | handle_crm | DRY RUN | {len(rows)} filas procesadas')
-            return
 
         self._set_worksheet_data(
             spreadsheet_url,
