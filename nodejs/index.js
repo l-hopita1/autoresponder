@@ -13,6 +13,13 @@ const client = new Client({
 console.log('🚀 Iniciando bot de WhatsApp...');
 
 // Cargar developers
+// Ejemplo de secrets.json:
+// {
+//     "developers": [
+//         "X@c.us",
+//         "Y@c.us"
+//     ]
+// }
 let DEVELOPERS = [];
 try {
     const data = JSON.parse(fs.readFileSync('./secrets.json', 'utf8'));
@@ -21,8 +28,8 @@ try {
 } catch (err) {
     console.log(`❌ No se pudo cargar secrets.json: ${err.message}`);
     DEVELOPERS = [
-    "X@c.us",
-  ]
+        "X@c.us",
+    ]
 }
 
 client.on('qr', qr => {
@@ -131,26 +138,31 @@ async function sendCRM() {
         const crmChats = [];
 
         for (const chat of chats) {
-            const messages = await chat.fetchMessages({ limit: 500 });
-
-            crmChats.push({
-                chatId: chat.id._serialized,
-                name: chat.name || null,
-                isGroup: chat.isGroup,
-                isReadOnly: chat.isReadOnly,
-                messages: messages.map(m => ({
-                    fromMe: m.fromMe,
-                    timestamp: m.timestamp,
-                    body: m.body || ""
-                }))
-            });
+            try {
+                const messages = await chat.fetchMessages({ limit: 500 });
+                crmChats.push({
+                    chatId: chat.id._serialized,
+                    name: chat.name || null,
+                    isGroup: chat.isGroup,
+                    isReadOnly: chat.isReadOnly,
+                    messages: messages.map(m => ({
+                        fromMe: m.fromMe,
+                        timestamp: m.timestamp,
+                        body: m.body || ""
+                    }))
+                });
+            } catch (error) {
+                console.log(`❌ Error al procesar chat ${chat.name || 'Sin nombre'} (${chat.id._serialized}): ${error.message} | Archivado: ${chat.isReadOnly}`);
+            }
+            // Delay to prevent detached frame / overload
+            await new Promise(resolve => setTimeout(resolve, 500));
         }
 
         await axios.post('http://localhost:5000/crm', { chats: crmChats });
         console.log(`📊 CRM actualizado (${crmChats.length} chats)`);
 
     } catch (err) {
-        console.log('❌ Error CRM:', err.message);
+        console.log('❌ Error Global CRM:', err.message);
     }
 }
 

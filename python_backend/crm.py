@@ -155,9 +155,9 @@ class crmWorker(workerClass):
         return spreadsheet.worksheet(worksheet_name)
     
     def _filter_chat(self, chat):
-        if not self._config.get("include_groups", False) and chat["isGroup"]:
+        if not self._config.get("include_groups", False) and chat.get("isGroup"):
             return False
-        if not self._config.get("include_readonly", False) and chat["isReadOnly"]:
+        if not self._config.get("include_readonly", False) and chat.get("isReadOnly"):
             return False
         return True
 

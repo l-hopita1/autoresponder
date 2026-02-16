@@ -60,7 +60,22 @@ def terminate_process(proc, name):
 def main():
     
     base_path = os.path.dirname(os.path.abspath(__file__))
-    log(f"LAUNCHER", f"🚀 Ejecutando versión {APP_VERSION}")
+
+    # 🔄 Sincronizar versión antes de iniciar nada
+    sync_script = os.path.join(base_path, "sync_version.py")
+    if os.path.exists(sync_script):
+        log("LAUNCHER", "🔄 Ejecutando sincronización de versión...")
+        subprocess.run(["python", sync_script], cwd=base_path)
+    
+    # Recargar versión (ya que pudo haber cambiado)
+    version_file = os.path.join(base_path, "python_backend", "VERSION.txt")
+    if os.path.exists(version_file):
+        with open(version_file, "r", encoding="utf-8") as f:
+            current_version = f.read().strip()
+    else:
+        current_version = "Versión desconocida"
+
+    log("LAUNCHER", f"🚀 Ejecutando versión {current_version}")
 
     backend_path = os.path.join(base_path, "python_backend", "code.py")
     bot_path = os.path.join(base_path, "nodejs", "index.js")

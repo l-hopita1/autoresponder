@@ -190,3 +190,9 @@
     - `test/TEST_NODE.bat`
     - `test/test_node.py`
     - `test/test_node.js`
+- 16 de febrero de 2026 11:52 - [2.1.2]
+    - `launcher.py`: Ejecuta la sincronización de versión antes de lanzar el bot.
+    - `sync_version.py`: Nuevo script que actualiza la versión desde Git al iniciar.
+    - `nodejs/index.js`: Se agrega manejo de errores (try/catch) en el loop del CRM para evitar interrupciones por chats corruptos.
+    - `config.json`: Se deshabilita el dry_run de CRM.
+    - `crm.py`: Se obtienen los parámetros mediante un get de 'isGroup' y 'isReadOnly' de los mensajes entrantes para evitar errores.
